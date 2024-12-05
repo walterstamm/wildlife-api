@@ -1,4 +1,4 @@
-// Observations:
+// Observation Endpoints:
 // - GET /observations
 // - GET /observation/:id
 // - GET /observations/by-animal/:animal-id
