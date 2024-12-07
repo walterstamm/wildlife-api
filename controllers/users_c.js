@@ -34,10 +34,37 @@ userController.addUser = async function (req, res) {
     console.error('error adding user - ', error);
   }
 };
-// - GET/auth/login
-// - GET/auth/logout
+// - GET/auth/login *This endpoint goes through a different router, should it be in a different controller?
+// - GET/auth/logout*This endpoint goes through a different router, should it be in a different controller?
 // - GET /users/
+
+userController.getAllUsers = async function (req, res) {
+    try{
+        const result = await db.getDatabase.db('WildlifeAPI').collection('Users').find();
+        result.toArray().then((users) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(users);
+        })
+    } catch {
+        console.log(`users/getAll error: ${error}`)
+        res.status(500).send('There was an error retrieving users.');
+    }
+}
 // - GET /users/:username
+
+userController.getUserByName = async function (req, res) {
+    const target = req.params.username
+    try{
+        const result = await db.getDatabase.db('WildlifeAPI').collection('Users').find({username: target});
+        result.toArray().then((users) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(users);
+        })
+    } catch {
+        console.log(`users/getOne error: ${error}`)
+        res.status(500).send('There was an error retrieving users.');
+    }
+}
 // - PUT /users/:username
 
 userController.editUserByName = async function (req, res) {
