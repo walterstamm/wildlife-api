@@ -4,6 +4,7 @@ const router = express.Router();
 // Why do we have this router thing here?
 const port = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
+const rateLimit = require('express-rate-limit');
 const route = require('./routes');
 const mongoDb = require('./database/data');
 
@@ -21,6 +22,11 @@ app.use((req, res, next) => {
   next();
 });
 
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: 'Too many requests from this IP address. Please try again after an hour.',
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -28,6 +34,8 @@ app.get('/', (req, res) => {
   res.send('API is running\n <p><a href="http://localhost:8080/api-docs/">API Docs</a></p>');
 });
 
+// Protect all routes with rate limiter to prevent abuse
+app.use('/', limiter);
 app.use('/', route);
 
 mongoDb.initDb((err) => {

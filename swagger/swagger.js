@@ -1,8 +1,26 @@
-const router = require('express').Router();
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const dotenv = require('dotenv');
+const swaggerAutogen = require('swagger-autogen')();
 
-router.use('/api-docs', swaggerUi.serve);
-router.get('/api-docs', swaggerUi.setup(swaggerDocument));
+dotenv.config();
 
-module.exports = router;
+const doc = {
+  info: {
+    title: 'Wildlife Observation API',
+    description: 'API for wildlife observation',
+  },
+  host: process.env.HOST,
+  produces: ['application/json'],
+  schemes: [process.env.MAIN_SCHEME],
+};
+
+const outputFile = './swagger-output.json';
+
+const routes = [
+  '../routes/animal_r.js',
+  // '../routes/observation_r.js',
+  // '../routes/report_r.js',
+  '../routes/user_r.js'
+];
+
+swaggerAutogen(outputFile, routes, doc);
+
