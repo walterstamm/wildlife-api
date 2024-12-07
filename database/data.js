@@ -1,7 +1,7 @@
 const {MongoClient} = require('mongodb');
 const dbConfig = {};
 
-const uri = process.env.CONNECT_STRING;
+const uri = process.env.MONGO_CONNECT;
 const client = new MongoClient(uri);
 
 dbConfig.connectDB = async function () {
@@ -9,7 +9,7 @@ dbConfig.connectDB = async function () {
 
         await client.connect();
 
-        const db = client.db('database name here');
+        const db = client.db('');
         return db
 
     } catch (error) {
