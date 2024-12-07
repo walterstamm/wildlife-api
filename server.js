@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.send('API is running');
+  res.send('API is running\n <p><a href="http://localhost:8080/api-docs/">API Docs</a></p>');
 });
 
 app.use('/', route);
