@@ -52,7 +52,7 @@ userController.getAllUsers = async function (req, res) {
 }
 // - GET /users/:username
 
-userController.getUserByName = async function (req, res) {
+userController.getUserByUsername = async function (req, res) {
     const target = req.params.username
     try{
         const result = await db.getDatabase.db('WildlifeAPI').collection('Users').find({username: target});

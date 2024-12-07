@@ -3,6 +3,10 @@ const router = new express.Router();
 const usersController = require('../controllers/users_c.js');
 const validate = require('../utilities/validation.js');
 
+router.get('/', usersController.getAllUsers);
+
+router.get('/:username', usersController.getUserByUsername);
+
 /**
  * @swagger
  * /users:
