@@ -3,6 +3,16 @@ const router = new express.Router();
 const animalController = require('../controllers/animal_c');
 const validate = require('../utilities/validation');
 
+router.get('/', animalController.getAllAnimals);
+
+router.get('/:id',
+    validate.idRule(),
+    validate.checkId,
+    animalController.getOneAnimal
+);
+
+router.get('/by-category/:category', animalController.getAnimalsByCategory);
+
 /**
  * @swagger
  * /animals:

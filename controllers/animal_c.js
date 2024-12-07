@@ -1,10 +1,56 @@
 const db = require('../database/data');
+const ObjectId = require('mongodb').ObjectId;
 const animalController = {};
 
 // Animal Endpoints:
 // - GET /animals
+
+animalController.getAllAnimals = async function (req, res) {
+    try{
+        const result = await db.getDatabase.db('WildlifeAPI').collection('Animals').find();
+        result.toArray().then((animals) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(animals);
+        })
+    } catch {
+        console.log(`animals/getAll error: ${error}`)
+        res.status(500).send('There was an error retrieving animals.');
+    }
+}
+
 // - GET /animals/:id
+
+animalController.getOneAnimal = async function (req, res) {
+    const targetString = String(req.params.id);
+    const target = new ObjectId(targetString);
+    try{
+        const result = await db.getDatabase.db('WildlifeAPI').collection('Animals').find({_id: target});
+        result.toArray().then((animals) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(animals);
+        })
+    } catch {
+        console.log(`animals/getOne error: ${error}`)
+        res.status(500).send('There was an error retrieving animals.');
+    }
+}
+
 // - GET /animals/by-category/:category
+
+animalController.getAnimalsByCategory = async function (req, res) {
+    const target = req.params.category
+    try{
+        const result = await db.getDatabase.db('WildlifeAPI').collection('Animals').find();
+        result.toArray().then((animals) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(animals);
+        })
+    } catch {
+        console.log(`animals/by-category error: ${error}`)
+        res.status(500).send('There was an error retrieving animals.');
+    }
+}
+
 // - POST /animals
     // Example ↓↓
     // example website URL -> https://kids.nationalgeographic.com/animals/mammals/facts/aardvark
