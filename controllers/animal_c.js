@@ -7,10 +7,13 @@ const animalController = {};
 // - GET /animals/by-category/:category
 // - POST /animals
     // Example ↓↓
-    // category: 'Omnivores',
-    // name: 'cat'
+    // example website URL -> https://kids.nationalgeographic.com/animals/mammals/facts/aardvark
+    // category: 'Mammals'
+    // common_name: 'Aardvarks'
+    // scientific_name: 'Orycteropus afer' 
+    // diet: 'Insectivore'
 animalController.addAnimal = async function(req, res){
-    const {category, name} = req.body;
+    const {category, common_name, scientific_name, diet} = req.body;
 
     try {
         const database = await db.connectDB();
@@ -18,7 +21,9 @@ animalController.addAnimal = async function(req, res){
 
         const result = await animalCollection.insertOne({
             category,
-            name
+            common_name,
+            scientific_name,
+            diet
         });
 
         return result;        

@@ -17,9 +17,10 @@ userController.addUser = async function(req, res){
     try {
         const database = await db.connectDB();
         const userCollection = database.collection('user');
+        const hashedPassword = await bcrypt.hash(password);
 
         const result = await userCollection.insertOne({
-            fname, lname, email, username, password, state, country
+            fname, lname, email, username, password: hashedPassword, state, country
         });
 
         return result;
