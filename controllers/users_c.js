@@ -16,7 +16,7 @@ userController.addUser = async function(req, res){
 
     try {
         const database = await db.getDatabase();
-        const userCollection = database.db().collection('user');
+        const userCollection = database.db('WildlifeAPI').collection('Users');
         const hashedPassword = await bcrypt.hash(password);
 
         const result = await userCollection.insertOne({
@@ -39,7 +39,7 @@ userController.deleteUserByName = async function(req, res){
     const username = req.params.username;
     try {
         const database = await db.getDatabase();
-        const userCollection = database.db().collection('user');
+        const userCollection = database.db('WildlifeAPI').collection('Users');
 
         const result = await userCollection.deleteOne({username: username});
 
