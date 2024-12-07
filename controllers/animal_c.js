@@ -16,8 +16,8 @@ animalController.addAnimal = async function(req, res){
     const {category, common_name, scientific_name, diet} = req.body;
 
     try {
-        const database = await db.connectDB();
-        const animalCollection = database.collection('animal');
+        const database = await db.getDatabase();
+        const animalCollection = database.db().collection('animal');
 
         const result = await animalCollection.insertOne({
             category,
@@ -39,10 +39,10 @@ animalController.addAnimal = async function(req, res){
 animalController.deleteAnimalById = async function(req, res){
     const id = req.params.id;
     try {
-        const database = await db.connectDB();
-        const animalCollection = database.collection('animal');
+        const database = await db.getDatabase();
+        const animalCollection = database.db().collection('animal');
 
-        const result = await animalCollection.deleteOne({id: id});
+        const result = await animalCollection.deleteOne({_id: id});
 
         if(result.deletedCount == 1){
             console.log('deleted');

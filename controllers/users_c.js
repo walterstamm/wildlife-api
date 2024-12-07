@@ -15,8 +15,8 @@ userController.addUser = async function(req, res){
     const {fname, lname, email, username, password, state, country} = req.body;
 
     try {
-        const database = await db.connectDB();
-        const userCollection = database.collection('user');
+        const database = await db.getDatabase();
+        const userCollection = database.db().collection('user');
         const hashedPassword = await bcrypt.hash(password);
 
         const result = await userCollection.insertOne({
@@ -38,8 +38,8 @@ userController.addUser = async function(req, res){
 userController.deleteUserByName = async function(req, res){
     const username = req.params.username;
     try {
-        const database = await db.connectDB();
-        const userCollection = database.collection('user');
+        const database = await db.getDatabase();
+        const userCollection = database.db().collection('user');
 
         const result = await userCollection.deleteOne({username: username});
 
