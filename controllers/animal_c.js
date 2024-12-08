@@ -7,7 +7,7 @@ const animalController = {};
 
 animalController.getAllAnimals = async function (req, res) {
     try{
-        const result = await db.getDatabase.db('WildlifeAPI').collection('Animals').find();
+        const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
         result.toArray().then((animals) => {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(animals);
@@ -23,7 +23,7 @@ animalController.getOneAnimal = async function (req, res) {
     const targetString = String(req.params.id);
     const target = new ObjectId(targetString);
     try{
-        const result = await db.getDatabase.db('WildlifeAPI').collection('Animals').find({_id: target});
+        const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find({_id: target});
         result.toArray().then((animals) => {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(animals);
@@ -38,7 +38,7 @@ animalController.getOneAnimal = async function (req, res) {
 animalController.getAnimalsByCategory = async function (req, res) {
     const target = req.params.category
     try{
-        const result = await db.getDatabase.db('WildlifeAPI').collection('Animals').find();
+        const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
         result.toArray().then((animals) => {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(animals);

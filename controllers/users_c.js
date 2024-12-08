@@ -41,7 +41,7 @@ userController.addUser = async function (req, res) {
 
 userController.getAllUsers = async function (req, res) {
     try{
-        const result = await db.getDatabase.db('WildlifeAPI').collection('Users').find();
+        const result = await db.getDatabase().db('WildlifeAPI').collection('Users').find();
         result.toArray().then((users) => {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(users);
@@ -56,7 +56,7 @@ userController.getUserById = async function (req, res) {
     const targetString = String(req.params.id)
     const target = new ObjectId(targetString);
     try{
-        const result = await db.getDatabase.db('WildlifeAPI').collection('Users').find({username: target});
+        const result = await db.getDatabase().db('WildlifeAPI').collection('Users').find({username: target});
         result.toArray().then((users) => {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(users);
