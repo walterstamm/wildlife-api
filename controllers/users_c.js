@@ -41,57 +41,72 @@ userController.addUser = async function (req, res) {
 // - GET /users/
 
 userController.getAllUsers = async function (req, res) {
-    try{
-        const result = await db.getDatabase().db('WildlifeAPI').collection('Users').find();
-        result.toArray().then((users) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(users);
-        })
-    } catch {
-        res.status(500).send('There was an error retrieving users.');
-    }
-}
+  try {
+    const result = await db.getDatabase().db('WildlifeAPI').collection('Users').find();
+    result.toArray().then((users) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(users);
+    });
+  } catch {
+    res.status(500).send('There was an error retrieving users.');
+  }
+};
 // - GET /users/:id
 
 userController.getUserById = async function (req, res) {
-    const targetString = String(req.params.id)
-    const target = new ObjectId(targetString);
-    try{
-        const result = await db.getDatabase().db('WildlifeAPI').collection('Users').find({username: target});
-        result.toArray().then((users) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(users);
-        })
-    } catch {
-        res.status(500).send('There was an error retrieving users.');
-    }
-}
+  const targetString = String(req.params.id);
+  const target = new ObjectId(targetString);
+  try {
+    const result = await db
+      .getDatabase()
+      .db('WildlifeAPI')
+      .collection('Users')
+      .find({ username: target });
+    result.toArray().then((users) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(users);
+    });
+  } catch {
+    res.status(500).send('There was an error retrieving users.');
+  }
+};
 // - PUT /users/:id
 
-userController.editUserByName = async function (req, res) {
-  const usernameEdit = req.params.username;
+userController.editUserById = async function (req, res) {
+  const userId = new ObjectId(req.params.id);
+
+  //   this is stupid but it works so I'm okay with it -L.C.
+  const { password } = req.body;
 
   // So, I'm not trying to copy the POST thing for users, but they're pretty similar in how they're sent.
   // I'll try my best to make it my own and fit to the standard we have, but I think in a real world situation,
   // that would be less than ideal. Keeping similar systems similar is a good idea to me. -L.C.
 
-  const userEdits = {
-    fname: req.body.fname,
-    lname: req.body.lname,
-    email: req.body.email,
-    state: req.body.state,
-    country: req.body.country
-  };
-
   try {
     const database = await db.getDatabase();
     const userCollection = database.db('WildlifeAPI').collection('Users');
-    const passwordEdit = await bcrypt.hash(req.params.password);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const result = await userCollection.replaceOne({ username: usernameEdit }, userEdits);
-    return result;
+    const userEdits = {
+      fname: req.body.fname,
+      lname: req.body.lname,
+      email: req.body.email,
+      username: req.body.username,
+      password: hashedPassword,
+      state: req.body.state,
+      country: req.body.country
+    };
+
+    const result = await userCollection.replaceOne({ _id: userId }, userEdits);
+    if (result.modifiedCount) {
+      console.log('Database modified');
+    } else {
+      console.log('Database not modified');
+    }
+    return res.status(200).json(result);
   } catch (error) {
     console.log('Error editing user!', error);
+    return res.status(500).json('500 Error!');
   }
 };
 
@@ -102,8 +117,7 @@ userController.deleteUserById = async function (req, res) {
     const database = await db.getDatabase();
     const userCollection = database.db('WildlifeAPI').collection('Users');
 
-    const result = await userCollection.deleteOne({_id: new ObjectId(id)});
-     
+    const result = await userCollection.deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount == 1) {
       console.log('deleted');
