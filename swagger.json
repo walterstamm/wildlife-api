@@ -5,12 +5,9 @@
     "description": "This is the Swagger Autogen documentation for the Wildlife API.",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "wildlife-api.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "http",
-    "https"
-  ],
+  "schemes": ["http", "https"],
   "paths": {
     "/animals/": {
       "post": {
