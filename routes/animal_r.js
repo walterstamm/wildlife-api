@@ -5,11 +5,7 @@ const validate = require('../utilities/validation');
 
 router.get('/', animalController.getAllAnimals);
 
-router.get('/:id',
-    validate.idRule(),
-    validate.checkId,
-    animalController.getOneAnimal
-);
+router.get('/:id', validate.idRule(), validate.checkId, animalController.getOneAnimal);
 
 router.get('/by-category/:category', animalController.getAnimalsByCategory);
 
@@ -63,10 +59,7 @@ router.get('/by-category/:category', animalController.getAnimalsByCategory);
  *       400:
  *         description: Invalid input
  */
-router.post('/',
-    validate.animalRules(),
-    validate.checkAnimal,
-    animalController.addAnimal);
+router.post('/', validate.animalRules(), validate.checkAnimal, animalController.addAnimal);
 
 /**
  * @swagger
@@ -86,9 +79,8 @@ router.post('/',
  *       404:
  *         description: Animal not found
  */
-router.delete('/:id',
-    validate.idRule(),
-    validate.checkId,
-    animalController.deleteAnimalById);
+router.put('/:id', validate.animalRules(), validate.checkAnimal, animalController.editAnimalById);
+
+router.delete('/:id', validate.idRule(), validate.checkId, animalController.deleteAnimalById);
 
 module.exports = router;
