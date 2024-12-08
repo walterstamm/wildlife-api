@@ -31,10 +31,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware to handle errors
-app.use((err, req, res) => {
-  console.error(err.stack); // Print error in the console
-  res.status(500).json({ message: 'Something went wrong!' }); // Answer to the client
-});
+// app.use((err, req, res) => {
+//   console.error(err.stack); // Print error in the console
+//   res.status(500).json({ message: 'Something went wrong!' }); // Answer to the client
+// });
 
 app.get('/', (req, res) => {
   res.send('API is running\n <p><a href="http://localhost:8080/api-docs/">API Docs</a></p>');

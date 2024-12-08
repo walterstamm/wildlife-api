@@ -1,6 +1,7 @@
 const db = require('../database/data');
 const ObjectId = require('mongodb').ObjectId;
 const userController = {};
+const bcrypt = require('bcrypt');
 
 // Users Endpoints:
 // - POST /auth/signup
@@ -18,7 +19,7 @@ userController.addUser = async function (req, res) {
   try {
     const database = await db.getDatabase();
     const userCollection = database.db('WildlifeAPI').collection('Users');
-    const hashedPassword = await bcrypt.hash(password);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const result = await userCollection.insertOne({
       fname,
@@ -30,9 +31,9 @@ userController.addUser = async function (req, res) {
       country
     });
 
-    return result;
+    return res.status(200).json(result);
   } catch (error) {
-    console.error('error adding user - ', error);
+    return res.status(500).json({ error: 'Failed to add user' });
   }
 };
 // - GET/auth/login *This endpoint goes through a different router, should it be in a different controller?
@@ -95,21 +96,23 @@ userController.editUserByName = async function (req, res) {
 };
 
 // - DELETE /users/:id (This is a change, Yun please update the function to target by id)
-userController.deleteUserByName = async function (req, res) {
-  const username = req.params.username;
+userController.deleteUserById = async function (req, res) {
+  const id = req.params.id;
   try {
     const database = await db.getDatabase();
     const userCollection = database.db('WildlifeAPI').collection('Users');
 
-    const result = await userCollection.deleteOne({ username: username });
+    const result = await userCollection.deleteOne({_id: new ObjectId(id)});
+     
 
     if (result.deletedCount == 1) {
       console.log('deleted');
     } else {
       console.log('not found');
     }
+    return res.status(200).json(result);
   } catch (error) {
-    console.error('error deleting user - ', error);
+    return res.status(500).json({ error: 'Failed to delete user' });
   }
 };
 
