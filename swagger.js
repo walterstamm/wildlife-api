@@ -5,7 +5,7 @@ const doc = {
     title: 'Wildlife API Swagger Testing',
     description: 'This is the Swagger Autogen documentation for the Wildlife API.'
   },
-  host: 'localhost:8080',
+  host: 'wildlife-api.onrender.com',
   schemes: ['http', 'https']
 };
 const outputFile = './swagger.json';
