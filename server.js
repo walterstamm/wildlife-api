@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware to handle errors
+
 app.use((err, req, res, next) => {
   console.error(err.stack); // Print error in the console
   res.status(500).json({ message: 'Something went wrong!' }); // Answer to the client

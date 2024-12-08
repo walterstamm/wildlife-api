@@ -69,10 +69,10 @@ animalController.addAnimal = async function(req, res){
             diet
         });
 
-        return result;        
+        return res.status(200).json(result);
 
     } catch (error) {
-        console.error('error adding animal - ', error);        
+        return res.status(500).json({ error: 'Failed to add animal' });
     }
 }
 
@@ -85,16 +85,18 @@ animalController.deleteAnimalById = async function(req, res){
         const database = await db.getDatabase();
         const animalCollection = database.db('WildlifeAPI').collection('Animals');
 
-        const result = await animalCollection.deleteOne({_id: id});
+        const result = await animalCollection.deleteOne({_id: new ObjectId(id)});
 
         if(result.deletedCount == 1){
             console.log('deleted');
         }else{
             console.log('not found');
         }
+
+        return res.status(200).json(result);
         
     } catch (error) {
-       console.error('error deleting animal - ', error); 
+        return res.status(500).json({ error: 'Failed to delete animal'});
     }
 }
 

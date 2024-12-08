@@ -63,7 +63,7 @@ router.get('/by-category/:category', animalController.getAnimalsByCategory);
  *       400:
  *         description: Invalid input
  */
-router.post('/animals',
+router.post('/',
     validate.animalRules(),
     validate.checkAnimal,
     animalController.addAnimal);
@@ -86,7 +86,7 @@ router.post('/animals',
  *       404:
  *         description: Animal not found
  */
-router.delete('/animals/:id',
+router.delete('/:id',
     validate.idRule(),
     validate.checkId,
     animalController.deleteAnimalById);

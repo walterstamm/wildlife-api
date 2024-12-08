@@ -98,6 +98,6 @@ router.post('/',
 router.delete('/:id',
     validate.idRule(),
     validate.checkId,
-    usersController.deleteUserByName);
+    usersController.deleteUserById);
 
 module.exports = router;
