@@ -46,7 +46,7 @@ validate.userRules = () => {
         body('username').trim().escape().isLength({ min: 1 }).withMessage('Please include a username.'),
         body('email').trim().escape().isEmail().withMessage('Please provide an email address.'),
         //If we want to make password requirements stricter, message Andrew to update the following validation rule
-        body('password').trim().escape().isStrongPassword({minLength: 3}).withMessage(`Please provide a password. Current password requirements:\nLength: at least 3 characters`),
+        body('password').trim().escape().isStrongPassword({minLength: 6, minLowercase: 1, minUppercase: 1, minNumbers: 1}).withMessage(`Please provide a password. Current password requirements:\nLength: at least 6 characters\nNumbers: at least 1 number(0-9)\nLetters: at least 1 each uppercase and lowercase`),
         body('state').trim().escape().isLength({ min: 1 }). withMessage('Please provide a state, province, etc.'),
         body('country').trim().escape().isLength({ min: 1 }).withMessage('Please provide a country.')
     ]

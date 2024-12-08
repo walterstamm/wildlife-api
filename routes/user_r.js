@@ -5,7 +5,7 @@ const validate = require('../utilities/validation.js');
 
 router.get('/', usersController.getAllUsers);
 
-router.get('/:username', usersController.getUserByUsername);
+router.get('/:id', usersController.getUserById);
 
 /**
  * @swagger
@@ -95,7 +95,7 @@ router.post('/',
  *       404:
  *         description: User not found
  */
-router.delete('/:username',
+router.delete('/:id',
     validate.idRule(),
     validate.checkId,
     usersController.deleteUserByName);

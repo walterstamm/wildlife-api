@@ -1,4 +1,5 @@
 const db = require('../database/data');
+const ObjectId = require('mongodb').ObjectId;
 const userController = {};
 
 // Users Endpoints:
@@ -46,14 +47,14 @@ userController.getAllUsers = async function (req, res) {
             res.status(200).json(users);
         })
     } catch {
-        console.log(`users/getAll error: ${error}`)
         res.status(500).send('There was an error retrieving users.');
     }
 }
-// - GET /users/:username
+// - GET /users/:id
 
-userController.getUserByUsername = async function (req, res) {
-    const target = req.params.username
+userController.getUserById = async function (req, res) {
+    const targetString = String(req.params.id)
+    const target = new ObjectId(targetString);
     try{
         const result = await db.getDatabase.db('WildlifeAPI').collection('Users').find({username: target});
         result.toArray().then((users) => {
@@ -61,11 +62,10 @@ userController.getUserByUsername = async function (req, res) {
             res.status(200).json(users);
         })
     } catch {
-        console.log(`users/getOne error: ${error}`)
         res.status(500).send('There was an error retrieving users.');
     }
 }
-// - PUT /users/:username
+// - PUT /users/:id
 
 userController.editUserByName = async function (req, res) {
   const usernameEdit = req.params.username;
@@ -94,7 +94,7 @@ userController.editUserByName = async function (req, res) {
   }
 };
 
-// - DELETE /users/:username
+// - DELETE /users/:id (This is a change, Yun please update the function to target by id)
 userController.deleteUserByName = async function (req, res) {
   const username = req.params.username;
   try {

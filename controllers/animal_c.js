@@ -13,7 +13,6 @@ animalController.getAllAnimals = async function (req, res) {
             res.status(200).json(animals);
         })
     } catch {
-        console.log(`animals/getAll error: ${error}`)
         res.status(500).send('There was an error retrieving animals.');
     }
 }
@@ -30,7 +29,6 @@ animalController.getOneAnimal = async function (req, res) {
             res.status(200).json(animals);
         })
     } catch {
-        console.log(`animals/getOne error: ${error}`)
         res.status(500).send('There was an error retrieving animals.');
     }
 }
@@ -46,7 +44,6 @@ animalController.getAnimalsByCategory = async function (req, res) {
             res.status(200).json(animals);
         })
     } catch {
-        console.log(`animals/by-category error: ${error}`)
         res.status(500).send('There was an error retrieving animals.');
     }
 }
