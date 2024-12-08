@@ -8,10 +8,6 @@ const rateLimit = require('express-rate-limit');
 const route = require('./routes');
 const mongoDb = require('./database/data');
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -31,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware to handle errors
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   console.error(err.stack); // Print error in the console
   res.status(500).json({ message: 'Something went wrong!' }); // Answer to the client
 });
