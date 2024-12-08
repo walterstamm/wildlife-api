@@ -1,6 +1,17 @@
 const express = require('express');
 const router = new express.Router();
 const animalController = require('../controllers/animal_c');
+const validate = require('../utilities/validation');
+
+router.get('/', animalController.getAllAnimals);
+
+router.get('/:id',
+    validate.idRule(),
+    validate.checkId,
+    animalController.getOneAnimal
+);
+
+router.get('/by-category/:category', animalController.getAnimalsByCategory);
 
 /**
  * @swagger
@@ -52,7 +63,10 @@ const animalController = require('../controllers/animal_c');
  *       400:
  *         description: Invalid input
  */
-router.post('/animals', animalController.addAnimal);
+router.post('/animals',
+    validate.animalRules(),
+    validate.checkAnimal,
+    animalController.addAnimal);
 
 /**
  * @swagger
@@ -72,6 +86,9 @@ router.post('/animals', animalController.addAnimal);
  *       404:
  *         description: Animal not found
  */
-router.delete('/animals/:id', animalController.deleteAnimalById);
+router.delete('/animals/:id',
+    validate.idRule(),
+    validate.checkId,
+    animalController.deleteAnimalById);
 
 module.exports = router;

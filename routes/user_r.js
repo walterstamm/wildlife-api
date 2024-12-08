@@ -1,6 +1,11 @@
 const express = require('express');
 const router = new express.Router();
 const usersController = require('../controllers/users_c.js');
+const validate = require('../utilities/validation.js');
+
+router.get('/', usersController.getAllUsers);
+
+router.get('/:id', usersController.getUserById);
 
 /**
  * @swagger
@@ -67,7 +72,10 @@ const usersController = require('../controllers/users_c.js');
  *       400:
  *         description: Invalid input
  */
-router.post('/', usersController.addUser);
+router.post('/',
+    validate.userRules(),
+    validate.checkUser,
+    usersController.addUser);
 
 /**
  * @swagger
@@ -87,6 +95,9 @@ router.post('/', usersController.addUser);
  *       404:
  *         description: User not found
  */
-router.delete('/:username', usersController.deleteUserByName);
+router.delete('/:id',
+    validate.idRule(),
+    validate.checkId,
+    usersController.deleteUserByName);
 
 module.exports = router;
