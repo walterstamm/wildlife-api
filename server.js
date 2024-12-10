@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
-const router = express.Router();
-// Why do we have this router thing here?
+
 const port = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
