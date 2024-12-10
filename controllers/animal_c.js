@@ -1,3 +1,5 @@
+const { StatusCodes } = require('http-status-codes');
+const { BAD_REQUEST, OK } = StatusCodes;
 const db = require('../database/data');
 const ObjectId = require('mongodb').ObjectId;
 const animalController = {};
@@ -11,10 +13,10 @@ animalController.getAllAnimals = async function (req, res) {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
     result.toArray().then((animals) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(animals);
+      res.status(OK).json(animals);
     });
   } catch {
-    res.status(500).send('There was an error retrieving animals.');
+    res.status(BAD_REQUEST).send('There was an error retrieving animals.');
   }
 };
 
@@ -31,10 +33,10 @@ animalController.getOneAnimal = async function (req, res) {
       .find({ _id: target });
     result.toArray().then((animals) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(animals);
+      res.status(OK).json(animals);
     });
   } catch {
-    res.status(500).send('There was an error retrieving animals.');
+    res.status(BAD_REQUEST).send('There was an error retrieving animals.');
   }
 };
 
@@ -46,10 +48,10 @@ animalController.getAnimalsByCategory = async function (req, res) {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
     result.toArray().then((animals) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(animals);
+      res.status(OK).json(animals);
     });
   } catch {
-    res.status(500).send('There was an error retrieving animals.');
+    res.status(BAD_REQUEST).send('There was an error retrieving animals.');
   }
 };
 
@@ -75,9 +77,9 @@ animalController.addAnimal = async function (req, res) {
       diet
     });
 
-    return res.status(200).json(result);
+    return res.status(OK).json(result);
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to add animal' });
+    return res.status(BAD_REQUEST).json({ error: 'Failed to add animal' });
   }
 };
 
@@ -103,10 +105,10 @@ animalController.editAnimalById = async function (req, res) {
     } else {
       console.log('Database not modified');
     }
-    return res.status(200).json(result);
+    return res.status(OK).json(result);
   } catch (error) {
     console.log('Error editing animal!', error);
-    return res.status(500).json('500 Error!');
+    return res.status(BAD_REQUEST).json('500 Error!');
   }
 };
 
@@ -126,9 +128,9 @@ animalController.deleteAnimalById = async function (req, res) {
       console.log('not found');
     }
 
-    return res.status(200).json(result);
+    return res.status(OK).json(result);
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to delete animal' });
+    return res.status(BAD_REQUEST).json({ error: 'Failed to delete animal' });
   }
 };
 

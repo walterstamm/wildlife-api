@@ -1,3 +1,5 @@
+const { StatusCodes } = require('http-status-codes');
+const { BAD_REQUEST, OK } = StatusCodes;
 const db = require('../database/data');
 const ObjectId = require('mongodb').ObjectId;
 const reportController = {};
@@ -28,9 +30,9 @@ reportController.addReport = async function(req, res){
         weather
     });
 
-    return res.status(200).json(result);
+    return res.status(OK).json(result);
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to add report' });
+    return res.status(BAD_REQUEST).json({ error: 'Failed to add report' });
   }
 };
 
@@ -54,9 +56,9 @@ reportController.deleteReportById = async function (req, res) {
         console.log('not found');
       }
   
-      return res.status(200).json(result);
+      return res.status(OK).json(result);
     } catch (error) {
-      return res.status(500).json({ error: 'Failed to delete report' });
+      return res.status(BAD_REQUEST).json({ error: 'Failed to delete report' });
     }
 };
 

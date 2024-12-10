@@ -1,3 +1,5 @@
+const { StatusCodes } = require('http-status-codes');
+const { BAD_REQUEST, OK } = StatusCodes;
 const db = require('../database/data');
 const ObjectId = require('mongodb').ObjectId;
 const userController = {};
@@ -32,9 +34,9 @@ userController.addUser = async function (req, res) {
       country
     });
 
-    return res.status(200).json(result);
+    return res.status(OK).json(result);
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to add user' });
+    return res.status(BAD_REQUEST).json({ error: 'Failed to add user' });
   }
 };
 // - GET/auth/login *This endpoint goes through a different router, should it be in a different controller?
@@ -47,10 +49,10 @@ userController.getAllUsers = async function (req, res) {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Users').find();
     result.toArray().then((users) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(users);
+      res.status(OK).json(users);
     });
   } catch {
-    res.status(500).send('There was an error retrieving users.');
+    res.status(BAD_REQUEST).send('There was an error retrieving users.');
   }
 };
 
@@ -67,10 +69,10 @@ userController.getUserById = async function (req, res) {
       .find({ username: target });
     result.toArray().then((users) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(users);
+      res.status(OK).json(users);
     });
   } catch {
-    res.status(500).send('There was an error retrieving users.');
+    res.status(BAD_REQUEST).send('There was an error retrieving users.');
   }
 };
 // - PUT /users/:id
@@ -107,10 +109,10 @@ userController.editUserById = async function (req, res) {
     } else {
       console.log('Database not modified');
     }
-    return res.status(200).json(result);
+    return res.status(OK).json(result);
   } catch (error) {
     console.log('Error editing user!', error);
-    return res.status(500).json('500 Error!');
+    return res.status(BAD_REQUEST).json('500 Error!');
   }
 };
 
@@ -129,9 +131,9 @@ userController.deleteUserById = async function (req, res) {
     } else {
       console.log('not found');
     }
-    return res.status(200).json(result);
+    return res.status(OK).json(result);
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to delete user' });
+    return res.status(BAD_REQUEST).json({ error: 'Failed to delete user' });
   }
 };
 

@@ -1,3 +1,5 @@
+const { StatusCodes } = require('http-status-codes');
+const { BAD_REQUEST, OK } = StatusCodes;
 const db = require('../database/data');
 const ObjectId = require('mongodb').ObjectId;
 const observationController = {};
@@ -29,9 +31,9 @@ observationController.addObservation = async function (req, res) {
         behavior
       });
   
-      return res.status(200).json(result);
+      return res.status(OK).json(result);
     } catch (error) {
-      return res.status(500).json({ error: 'Failed to add observation' });
+      return res.status(BAD_REQUEST).json({ error: 'Failed to add observation' });
     }
 }
 
@@ -53,9 +55,9 @@ observationController.deleteObservationById = async function (req, res) {
         console.log('not found');
       }
   
-      return res.status(200).json(result);
+      return res.status(OK).json(result);
     } catch (error) {
-      return res.status(500).json({ error: 'Failed to delete observation' });
+      return res.status(BAD_REQUEST).json({ error: 'Failed to delete observation' });
     }
 }
   
