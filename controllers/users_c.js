@@ -1,5 +1,4 @@
 const { StatusCodes } = require('http-status-codes');
-const { BAD_REQUEST, OK } = StatusCodes;
 const db = require('../database/data');
 const ObjectId = require('mongodb').ObjectId;
 const userController = {};
@@ -17,6 +16,8 @@ const bcrypt = require('bcrypt');
 // country: 'USA'
 userController.addUser = async function (req, res) {
   // #swagger.tags = ['Users']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   const { fname, lname, email, username, password, state, country } = req.body;
 
   try {
@@ -34,9 +35,9 @@ userController.addUser = async function (req, res) {
       country
     });
 
-    return res.status(OK).json(result);
+    return res.status(StatusCodes.OK).json(result);
   } catch (error) {
-    return res.status(BAD_REQUEST).json({ error: 'Failed to add user' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to add user' });
   }
 };
 // - GET/auth/login *This endpoint goes through a different router, should it be in a different controller?
@@ -45,20 +46,24 @@ userController.addUser = async function (req, res) {
 
 userController.getAllUsers = async function (req, res) {
   // #swagger.tags = ['Users']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   try {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Users').find();
     result.toArray().then((users) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(OK).json(users);
+      res.status(StatusCodes.OK).json(users);
     });
   } catch {
-    res.status(BAD_REQUEST).send('There was an error retrieving users.');
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving users.');
   }
 };
 
 // - GET /users/:id
 userController.getUserById = async function (req, res) {
   // #swagger.tags = ['Users']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   const targetString = String(req.params.id);
   const target = new ObjectId(targetString);
   try {
@@ -69,19 +74,21 @@ userController.getUserById = async function (req, res) {
       .find({ username: target });
     result.toArray().then((users) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(OK).json(users);
+      res.status(StatusCodes.OK).json(users);
     });
   } catch {
-    res.status(BAD_REQUEST).send('There was an error retrieving users.');
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving users.');
   }
 };
 // - PUT /users/:id
 
 userController.editUserById = async function (req, res) {
   // #swagger.tags = ['Users']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   const userId = new ObjectId(req.params.id);
 
-  //   this is stupid but it works so I'm okay with it -L.C.
+  //   this is stupid but it works so I'm StatusCodes.OKay with it -L.C.
   const { password } = req.body;
 
   // So, I'm not trying to copy the POST thing for users, but they're pretty similar in how they're sent.
@@ -109,16 +116,18 @@ userController.editUserById = async function (req, res) {
     } else {
       console.log('Database not modified');
     }
-    return res.status(OK).json(result);
+    return res.status(StatusCodes.OK).json(result);
   } catch (error) {
     console.log('Error editing user!', error);
-    return res.status(BAD_REQUEST).json('500 Error!');
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json('500 Error!');
   }
 };
 
 // - DELETE /users/:id (This is a change, Yun please update the function to target by id)
 userController.deleteUserById = async function (req, res) {
   // #swagger.tags = ['Users']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   const id = req.params.id;
   try {
     const database = await db.getDatabase();
@@ -131,9 +140,9 @@ userController.deleteUserById = async function (req, res) {
     } else {
       console.log('not found');
     }
-    return res.status(OK).json(result);
+    return res.status(StatusCodes.OK).json(result);
   } catch (error) {
-    return res.status(BAD_REQUEST).json({ error: 'Failed to delete user' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to delete user' });
   }
 };
 

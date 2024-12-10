@@ -1,5 +1,4 @@
 const { StatusCodes } = require('http-status-codes');
-const { BAD_REQUEST, OK } = StatusCodes;
 const db = require('../database/data');
 const ObjectId = require('mongodb').ObjectId;
 const animalController = {};
@@ -9,20 +8,24 @@ const animalController = {};
 
 animalController.getAllAnimals = async function (req, res) {
   // #swagger.tags = ['Animals']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   try {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
     result.toArray().then((animals) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(OK).json(animals);
+      res.status(StatusCodes.StatusCodes.OK).json(animals);
     });
   } catch {
-    res.status(BAD_REQUEST).send('There was an error retrieving animals.');
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving animals.');
   }
 };
 
 // - GET /animals/:id
 animalController.getOneAnimal = async function (req, res) {
   // #swagger.tags = ['Animals']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   const targetString = String(req.params.id);
   const target = new ObjectId(targetString);
   try {
@@ -33,25 +36,27 @@ animalController.getOneAnimal = async function (req, res) {
       .find({ _id: target });
     result.toArray().then((animals) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(OK).json(animals);
+      res.status(StatusCodes.OK).json(animals);
     });
   } catch {
-    res.status(BAD_REQUEST).send('There was an error retrieving animals.');
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving animals.');
   }
 };
 
 // - GET /animals/by-category/:category
 animalController.getAnimalsByCategory = async function (req, res) {
   // #swagger.tags = ['Animals']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   const target = req.params.category;
   try {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
     result.toArray().then((animals) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(OK).json(animals);
+      res.status(StatusCodes.OK).json(animals);
     });
   } catch {
-    res.status(BAD_REQUEST).send('There was an error retrieving animals.');
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving animals.');
   }
 };
 
@@ -64,6 +69,8 @@ animalController.getAnimalsByCategory = async function (req, res) {
 // diet: 'Insectivore'
 animalController.addAnimal = async function (req, res) {
   // #swagger.tags = ['Animals']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   const { category, common_name, scientific_name, diet } = req.body;
 
   try {
@@ -77,15 +84,17 @@ animalController.addAnimal = async function (req, res) {
       diet
     });
 
-    return res.status(OK).json(result);
+    return res.status(StatusCodes.OK).json(result);
   } catch (error) {
-    return res.status(BAD_REQUEST).json({ error: 'Failed to add animal' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to add animal' });
   }
 };
 
 // - PUT /animals/:id
 animalController.editAnimalById = async function (req, res) {
   // #swagger.tags = ['Animals']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   const animalId = new ObjectId(req.params.id);
 
   try {
@@ -105,16 +114,18 @@ animalController.editAnimalById = async function (req, res) {
     } else {
       console.log('Database not modified');
     }
-    return res.status(OK).json(result);
+    return res.status(StatusCodes.OK).json(result);
   } catch (error) {
     console.log('Error editing animal!', error);
-    return res.status(BAD_REQUEST).json('500 Error!');
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json('500 Error!');
   }
 };
 
 // - DELETE /animals/:id
 animalController.deleteAnimalById = async function (req, res) {
   // #swagger.tags = ['Animals']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
   const id = req.params.id;
   try {
     const database = await db.getDatabase();
@@ -128,9 +139,9 @@ animalController.deleteAnimalById = async function (req, res) {
       console.log('not found');
     }
 
-    return res.status(OK).json(result);
+    return res.status(StatusCodes.OK).json(result);
   } catch (error) {
-    return res.status(BAD_REQUEST).json({ error: 'Failed to delete animal' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to delete animal' });
   }
 };
 
