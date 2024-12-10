@@ -13,6 +13,7 @@ const reportController = {};
 // time: 'morning, afternoon, evening, and night'
 // weather: 'sunny, raining, cloudy....'
 reportController.addReport = async function(req, res){
+  // #swagger.tags = ['Reports']
   const {user_id, observation_id, date, time, weather} = req.body;
 
   try {
@@ -39,6 +40,7 @@ reportController.addReport = async function(req, res){
 
 // - DELETE /reports/:id
 reportController.deleteReportById = async function (req, res) {
+    // #swagger.tags = ['Reports']
     const id = req.params.id;
     try {
       const database = await db.getDatabase();

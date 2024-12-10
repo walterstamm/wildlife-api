@@ -15,6 +15,7 @@ const observationController = {};
 // gender: 'male, female, and unknown'
 // behavior: 'playing, hunting, sleeping...'
 observationController.addObservation = async function (req, res) {
+    // #swagger.tags = ['Observations']
     const {animal_id, age, gender, behavior} = req.body;
   
     try {
@@ -38,6 +39,7 @@ observationController.addObservation = async function (req, res) {
 
 // - DELETE /observations/:id
 observationController.deleteObservationById = async function (req, res) {
+    // #swagger.tags = ['Observations']
     const id = req.params.id;
     try {
       const database = await db.getDatabase();

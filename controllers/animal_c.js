@@ -6,6 +6,7 @@ const animalController = {};
 // - GET /animals
 
 animalController.getAllAnimals = async function (req, res) {
+  // #swagger.tags = ['Animals']
   try {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
     result.toArray().then((animals) => {
@@ -18,8 +19,8 @@ animalController.getAllAnimals = async function (req, res) {
 };
 
 // - GET /animals/:id
-
 animalController.getOneAnimal = async function (req, res) {
+  // #swagger.tags = ['Animals']
   const targetString = String(req.params.id);
   const target = new ObjectId(targetString);
   try {
@@ -38,8 +39,8 @@ animalController.getOneAnimal = async function (req, res) {
 };
 
 // - GET /animals/by-category/:category
-
 animalController.getAnimalsByCategory = async function (req, res) {
+  // #swagger.tags = ['Animals']
   const target = req.params.category;
   try {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
@@ -60,6 +61,7 @@ animalController.getAnimalsByCategory = async function (req, res) {
 // scientific_name: 'Orycteropus afer'
 // diet: 'Insectivore'
 animalController.addAnimal = async function (req, res) {
+  // #swagger.tags = ['Animals']
   const { category, common_name, scientific_name, diet } = req.body;
 
   try {
@@ -80,8 +82,8 @@ animalController.addAnimal = async function (req, res) {
 };
 
 // - PUT /animals/:id
-
 animalController.editAnimalById = async function (req, res) {
+  // #swagger.tags = ['Animals']
   const animalId = new ObjectId(req.params.id);
 
   try {
@@ -110,6 +112,7 @@ animalController.editAnimalById = async function (req, res) {
 
 // - DELETE /animals/:id
 animalController.deleteAnimalById = async function (req, res) {
+  // #swagger.tags = ['Animals']
   const id = req.params.id;
   try {
     const database = await db.getDatabase();

@@ -14,6 +14,7 @@ const bcrypt = require('bcrypt');
 // state: 'Utah',
 // country: 'USA'
 userController.addUser = async function (req, res) {
+  // #swagger.tags = ['Users']
   const { fname, lname, email, username, password, state, country } = req.body;
 
   try {
@@ -41,6 +42,7 @@ userController.addUser = async function (req, res) {
 // - GET /users/
 
 userController.getAllUsers = async function (req, res) {
+  // #swagger.tags = ['Users']
   try {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Users').find();
     result.toArray().then((users) => {
@@ -51,9 +53,10 @@ userController.getAllUsers = async function (req, res) {
     res.status(500).send('There was an error retrieving users.');
   }
 };
-// - GET /users/:id
 
+// - GET /users/:id
 userController.getUserById = async function (req, res) {
+  // #swagger.tags = ['Users']
   const targetString = String(req.params.id);
   const target = new ObjectId(targetString);
   try {
@@ -73,6 +76,7 @@ userController.getUserById = async function (req, res) {
 // - PUT /users/:id
 
 userController.editUserById = async function (req, res) {
+  // #swagger.tags = ['Users']
   const userId = new ObjectId(req.params.id);
 
   //   this is stupid but it works so I'm okay with it -L.C.
@@ -112,6 +116,7 @@ userController.editUserById = async function (req, res) {
 
 // - DELETE /users/:id (This is a change, Yun please update the function to target by id)
 userController.deleteUserById = async function (req, res) {
+  // #swagger.tags = ['Users']
   const id = req.params.id;
   try {
     const database = await db.getDatabase();
