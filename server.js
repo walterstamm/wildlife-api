@@ -7,7 +7,8 @@ app.use('/utilities', express.static('utilities'));
 const port = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
-const route = require('./routes');
+const routes = require('./routes');
+const apiDocsRoute = require('./routes/api-docs');
 const mongoDb = require('./database/data');
 
 app.use((req, res, next) => {
@@ -56,7 +57,8 @@ app.get('/', (_req, res) => {
 
 // Protect all routes with rate limiter to prevent abuse
 app.use('/', limiter);
-app.use('/', route);
+app.use('/', routes);
+app.use('/api-docs', apiDocsRoute);
 
 mongoDb.initDb((err) => {
   if (err) {

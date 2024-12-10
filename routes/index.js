@@ -6,6 +6,5 @@ router.use('/animals', require('./animal_r'));
 router.use('/users', require('./user_r'));
 router.use('/observations', require('./observation_r'));
 router.use('/reports', require('./report_r'));
-router.use('/api-docs', require('./api-docs'));
 
 module.exports = router;
