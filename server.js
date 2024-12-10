@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+// Serve static files from the "utilities" directory
+app.use('/utilities', express.static('utilities'));
+
 const port = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
@@ -27,13 +30,28 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware to handle errors
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  console.error(err.stack); // Print error in the console
-  res.status(500).json({ message: 'Something went wrong!' }); // Answer to the client
+  console.error(err.stack);
+  res.status(500).json({
+    message: `Something went wrong while querying ${req.originalUrl}`, 
+  });
 });
 
-app.get('/', (req, res) => {
-  res.send('API is running\n <p><a href="http://localhost:8080/api-docs/">API Docs</a></p>');
+app.get('/', (_req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <link rel="stylesheet" type="text/css" href="/utilities/styles.css">
+      </head>
+      <body>
+        <img src="/utilities/green-check-mark.png" alt="Wildlife Observation API" class="api-status">
+        <h1>API is running</h1>
+        <p>Welcome to the Wildlife Observation API</p>
+        <p><a href="${process.env.MAIN_SCHEME}://${process.env.HOST}/api-docs">Go to the API docs</a></p>
+      </body>
+    </html>
+  `);
 });
 
 // Protect all routes with rate limiter to prevent abuse
