@@ -95,7 +95,7 @@ animalController.editAnimalById = async function (req, res) {
   // #swagger.tags = ['Animals']
   // #swagger.responses[200] = {description: "Success"}
   // #swagger.responses[500] = {description: "Internal Server Error"}
-  const animalId = new ObjectId(req.params.id);
+  const animalId = ObjectId.createFromHexString(req.params.id);
 
   try {
     const database = await db.getDatabase();
@@ -131,7 +131,7 @@ animalController.deleteAnimalById = async function (req, res) {
     const database = await db.getDatabase();
     const animalCollection = database.db('WildlifeAPI').collection('Animals');
 
-    const result = await animalCollection.deleteOne({ _id: new ObjectId(id) });
+    const result = await animalCollection.deleteOne({ _id: ObjectId.createFromHexString(id) });
 
     if (result.deletedCount == 1) {
       console.log('deleted');

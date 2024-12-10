@@ -50,7 +50,7 @@ observationController.deleteObservationById = async function (req, res) {
     const database = await db.getDatabase();
     const observationCollection = database.db('WildlifeAPI').collection('Observations');
 
-    const result = await observationCollection.deleteOne({ _id: new ObjectId(id) });
+    const result = await observationCollection.deleteOne({ _id: ObjectId.createFromHexString(id) });
 
     if (result.deletedCount == 1) {
       console.log('deleted');

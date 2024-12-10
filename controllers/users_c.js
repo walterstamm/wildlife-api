@@ -86,7 +86,7 @@ userController.editUserById = async function (req, res) {
   // #swagger.tags = ['Users']
   // #swagger.responses[200] = {description: "Success"}
   // #swagger.responses[500] = {description: "Internal Server Error"}
-  const userId = new ObjectId(req.params.id);
+  const userId = ObjectId.createFromHexString(Number(req.params.id));
 
   //   this is stupid but it works so I'm StatusCodes.OKay with it -L.C.
   const { password } = req.body;
@@ -133,7 +133,7 @@ userController.deleteUserById = async function (req, res) {
     const database = await db.getDatabase();
     const userCollection = database.db('WildlifeAPI').collection('Users');
 
-    const result = await userCollection.deleteOne({ _id: new ObjectId(id) });
+    const result = await userCollection.deleteOne({ _id: ObjectId.createFromHexString(Number(id)) });
 
     if (result.deletedCount == 1) {
       console.log('deleted');

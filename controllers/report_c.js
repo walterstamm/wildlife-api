@@ -51,7 +51,7 @@ reportController.deleteReportById = async function (req, res) {
     const database = await db.getDatabase();
     const reportCollection = database.db('WildlifeAPI').collection('Reports');
 
-    const result = await reportCollection.deleteOne({ _id: new ObjectId(id) });
+    const result = await reportCollection.deleteOne({ _id: ObjectId.createFromHexString(id) });
 
     if (result.deletedCount == 1) {
       console.log('deleted');
