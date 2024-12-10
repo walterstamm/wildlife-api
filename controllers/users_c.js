@@ -110,7 +110,7 @@ userController.editUserById = async function (req, res) {
   }
 };
 
-// - DELETE /users/:id (This is a change, Yun please update the function to target by id)
+// - DELETE /users/:id 
 userController.deleteUserById = async function (req, res) {
   const id = req.params.id;
   try {
