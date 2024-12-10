@@ -7,6 +7,24 @@
   },
   "host": "localhost:8080",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Animals",
+      "description": "Endpoints for animals in the database"
+    },
+    {
+      "name": "Users",
+      "description": "Endpoints for users in the database"
+    },
+    {
+      "name": "Observations",
+      "description": "Endpoints for observations in the database"
+    },
+    {
+      "name": "Reports",
+      "description": "Endpoints for reports in the database"
+    }
+  ],
   "schemes": [
     "http"
   ],
@@ -16,6 +34,9 @@
   "paths": {
     "/animals/": {
       "get": {
+        "tags": [
+          "Animals"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -30,6 +51,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Animals"
+        ],
         "description": "",
         "parameters": [
           {
@@ -69,6 +93,9 @@
     },
     "/animals/{id}": {
       "get": {
+        "tags": [
+          "Animals"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -94,6 +121,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Animals"
+        ],
         "description": "",
         "parameters": [
           {
@@ -137,6 +167,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Animals"
+        ],
         "description": "",
         "parameters": [
           {
@@ -161,6 +194,9 @@
     },
     "/animals/by-category/{category}": {
       "get": {
+        "tags": [
+          "Animals"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -185,6 +221,9 @@
     },
     "/users/": {
       "get": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -199,6 +238,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "parameters": [
           {
@@ -247,6 +289,9 @@
     },
     "/users/{id}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -269,6 +314,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "parameters": [
           {
@@ -321,6 +369,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "parameters": [
           {
@@ -345,6 +396,9 @@
     },
     "/observations/": {
       "post": {
+        "tags": [
+          "Observations"
+        ],
         "description": "",
         "parameters": [
           {
@@ -381,6 +435,9 @@
     },
     "/observations/{id}": {
       "delete": {
+        "tags": [
+          "Observations"
+        ],
         "description": "",
         "parameters": [
           {
@@ -402,6 +459,9 @@
     },
     "/reports/": {
       "post": {
+        "tags": [
+          "Reports"
+        ],
         "description": "",
         "parameters": [
           {
@@ -441,6 +501,9 @@
     },
     "/reports/{id}": {
       "delete": {
+        "tags": [
+          "Reports"
+        ],
         "description": "",
         "parameters": [
           {
@@ -456,16 +519,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api-docs/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }

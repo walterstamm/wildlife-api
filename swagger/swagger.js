@@ -10,6 +10,24 @@ const doc = {
   },
   host: process.env.HOST,
   produces: ['application/json'],
+  tags: [
+    {
+      name: 'Animals',
+      description: 'Endpoints for animals in the database',
+    },
+    {
+      name: 'Users',
+      description: 'Endpoints for users in the database',
+    },
+    {
+      name: 'Observations',
+      description: 'Endpoints for observations in the database',
+    },
+    {
+      name: 'Reports',
+      description: 'Endpoints for reports in the database',
+    },
+  ],
   schemes: [process.env.MAIN_SCHEME],
 };
 
