@@ -1,3 +1,4 @@
+const { StatusCodes } = require('http-status-codes');
 const { body, param, validationResult } = require('express-validator');
 const validate = {};
 
@@ -9,7 +10,7 @@ validate.checkId = (req, res, next) => {
     let errors = [];
     errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(400).send("Invalid Object Id. Try again.");
+        res.status(StatusCodes.BAD_REQUEST).send("Invalid Object Id. Try again.");
     }
     next();
 };
@@ -32,7 +33,7 @@ validate.checkAnimal = (req, res, next) => {
           return `${error.path}: ${error.msg}`;
         })
         .join('\n');
-      res.status(400).send(`Invalid animal:
+      res.status(StatusCodes.BAD_REQUEST).send(`Invalid animal:
 Errors detected:
 ${errorString}`);
     }
@@ -61,7 +62,7 @@ validate.checkUser = (req, res, next) => {
           return `${error.path}: ${error.msg}`;
         })
         .join('\n');
-      res.status(400).send(`Invalid user:
+      res.status(StatusCodes.BAD_REQUEST).send(`Invalid user:
 Errors detected:
 ${errorString}`);
     }
