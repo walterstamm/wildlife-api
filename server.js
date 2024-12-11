@@ -49,7 +49,7 @@ app.get('/', (_req, res) => {
         <img src="/utilities/green-check-mark.png" alt="Wildlife Observation API" class="api-status">
         <h1>API is running</h1>
         <p>Welcome to the Wildlife Observation API</p>
-        <p><a href="${process.env.MAIN_SCHEME}://${process.env.HOST}/api-docs">Go to the API docs</a></p>
+         <p><a href="/api-docs">Go to the API docs</a></p>
       </body>
     </html>
   `);
