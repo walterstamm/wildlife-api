@@ -55,6 +55,7 @@ app.get('/', (_req, res) => {
   `);
 });
 
+
 // Protect all routes with rate limiter to prevent abuse
 app.use('/', limiter);
 app.use('/', routes);
