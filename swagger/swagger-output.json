@@ -5,7 +5,7 @@
     "description": "API for wildlife observation",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "wildlife-api.onrender.com",
   "basePath": "/",
   "tags": [
     {
@@ -26,7 +26,7 @@
     }
   ],
   "schemes": [
-    "http"
+    "https"
   ],
   "produces": [
     "application/json"
@@ -43,7 +43,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -80,10 +80,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -110,10 +107,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -156,10 +150,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -181,10 +172,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -211,7 +199,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -230,7 +218,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -276,10 +264,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -306,7 +291,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -358,10 +343,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -383,10 +365,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -425,7 +404,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -449,7 +428,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -491,7 +470,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
@@ -515,7 +494,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success"
           },
           "500": {
             "description": "Internal Server Error"
