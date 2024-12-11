@@ -47,9 +47,11 @@ app.get('/', (_req, res) => {
       </head>
       <body>
         <img src="/utilities/green-check-mark.png" alt="Wildlife Observation API" class="api-status">
-        <h1>API is running</h1>
-        <p>Welcome to the Wildlife Observation API</p>
-         <p><a href="/api-docs">Go to the API docs</a></p>
+        <div class="status-content">
+          <h1>API is running</h1>
+          <p>Welcome to the Wildlife Observation API</p>
+          <p><a href="/api-docs">Go to the API docs</a></p>
+        </div>
       </body>
     </html>
   `);
