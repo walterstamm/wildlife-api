@@ -1,3 +1,4 @@
+const { StatusCodes } = require('http-status-codes');
 const reportController = require('../../controllers/report_c');
 const db = require('../../database/data');
 
@@ -34,7 +35,7 @@ describe('addReport', () => {
 
     await reportController.addReport(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(res.json).toHaveBeenCalledTimes(1);
   });
 
@@ -51,7 +52,7 @@ describe('addReport', () => {
 
     await reportController.addReport(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(StatusCodes.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ error: 'Failed to add report' });
   });
 });

@@ -1,3 +1,4 @@
+const { StatusCodes } = require('http-status-codes');
 const observationController = require('../../controllers/observations_c');
 const db = require('../../database/data');
 
@@ -33,7 +34,7 @@ describe('addObservation', () => {
 
     await observationController.addObservation(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(res.json).toHaveBeenCalledTimes(1);
   });
 
@@ -50,7 +51,7 @@ describe('addObservation', () => {
 
     await observationController.addObservation(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(StatusCodes.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ error: 'Failed to add observation' });
   });
 });
