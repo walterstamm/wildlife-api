@@ -14,7 +14,7 @@ animalController.getAllAnimals = async function (req, res) {
     const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
     result.toArray().then((animals) => {
       res.setHeader('Content-Type', 'application/json');
-      res.status(StatusCodes.StatusCodes.OK).json(animals);
+      res.status(StatusCodes.OK).json(animals);
     });
   } catch {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving animals.');
