@@ -123,7 +123,7 @@ userController.editUserById = async function (req, res) {
   }
 };
 
-// - DELETE /users/:id (This is a change, Yun please update the function to target by id)
+// - DELETE /users/:id 
 userController.deleteUserById = async function (req, res) {
   // #swagger.tags = ['Users']
   // #swagger.responses[200] = {description: "Success"}

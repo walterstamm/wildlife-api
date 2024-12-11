@@ -12,7 +12,7 @@ const observationController = {};
 // - POST /observations
 // Example ↓↓
 // animal_id
-// age: 'baby, teenager, adult, and old'
+// age: 'juvenile, adolescent, adult, elderly'
 // gender: 'male, female, and unknown'
 // behavior: 'playing, hunting, sleeping...'
 observationController.addObservation = async function (req, res) {
