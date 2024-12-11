@@ -1,3 +1,4 @@
+const { StatusCodes } = require('http-status-codes');
 const userController = require('../../controllers/users_c');
 const db = require('../../database/data');
 const bcrypt = require('bcryptjs');
@@ -40,7 +41,7 @@ describe('addUser', () => {
 
     await userController.addUser(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(res.json).toHaveBeenCalledWith(mockInsertResult);
   });
 
@@ -59,7 +60,7 @@ describe('addUser', () => {
 
     await userController.addUser(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(StatusCodes.INTERNAL_SERVER_ERROR);
     expect(res.json).toHaveBeenCalledWith({ error: 'Failed to add user' });
   });
 });
