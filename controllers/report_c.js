@@ -10,7 +10,7 @@ const reportController = {};
 // Example ↓↓
 // user_id
 // observation_id
-// date: '2020-2-2'
+// date: '2020-02-23'
 // time: 'morning, afternoon, evening, and night'
 // weather: 'sunny, raining, cloudy....'
 reportController.addReport = async function (req, res) {
