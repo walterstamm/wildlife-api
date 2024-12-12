@@ -5,9 +5,62 @@ const observationController = {};
 
 // Observation Endpoints:
 // - GET /observations
-// - GET /observation/:id
+
+observationController.getAllObservations = async function (req, res) {
+  // #swagger.tags = ['Observations']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
+  try {
+    const result = await db.getDatabase().db('WildlifeAPI').collection('Observations').find();
+    result.toArray().then((observations) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(StatusCodes.OK).json(observations);
+    });
+  } catch {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving observations.');
+  }
+};
+
+// - GET /observations/:id
+observationController.getOneObservation = async function (req, res) {
+  // #swagger.tags = ['Observations']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
+  const targetString = String(req.params.id);
+  const target = new ObjectId(targetString);
+  try {
+    const result = await db
+      .getDatabase()
+      .db('WildlifeAPI')
+      .collection('Observations')
+      .find({ _id: target });
+    result.toArray().then((observations) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(StatusCodes.OK).json(observations);
+    });
+  } catch {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving observations.');
+  }
+};
+
 // - GET /observations/by-animal/:animal-id
-// - GET /observations/by-user/:username
+observationController.getObservationsByAnimal = async function (req, res) {
+  // #swagger.tags = ['Observations']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
+  const targetString = String(req.params.animal_id);
+  const target = new ObjectId(targetString);
+  try {
+    const result = await db.getDatabase().db('WildlifeAPI').collection('Observations').find({animal_id: target});
+    result.toArray().then((observations) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(StatusCodes.OK).json(observations);
+    });
+  } catch {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving observations.');
+  }
+};
+
 
 // - POST /observations
 // Example ↓↓

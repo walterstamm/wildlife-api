@@ -3,6 +3,20 @@ const router = new express.Router();
 const reportController = require('../controllers/report_c.js');
 const validate = require('../utilities/validation.js');
 
+router.get('/', reportController.getAllReports);
+
+router.get('/:id',
+    validate.idRule(),
+    validate.checkId,
+    reportController.getOneReport
+);
+
+router.get('/by-user/:user_id',
+    validate.idRule(),
+    validate.checkId,
+    reportController.getReportsByUser
+);
+
 router.post('/',
     validate.reportRules(),
     validate.checkReport,

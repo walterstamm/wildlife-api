@@ -5,6 +5,60 @@ const reportController = {};
 
 // Report Endpoints:
 // - GET /reports
+reportController.getAllReports = async function (req, res) {
+  // #swagger.tags = ['Reports']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
+  try {
+    const result = await db.getDatabase().db('WildlifeAPI').collection('Reports').find();
+    result.toArray().then((reports) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(StatusCodes.OK).json(reports);
+    });
+  } catch {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving reports.');
+  }
+};
+
+// - GET /reports/:id
+reportController.getOneReport = async function (req, res) {
+  // #swagger.tags = ['Reports']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
+  const targetString = String(req.params.id);
+  const target = new ObjectId(targetString);
+  try {
+    const result = await db
+      .getDatabase()
+      .db('WildlifeAPI')
+      .collection('Reports')
+      .find({ _id: target });
+    result.toArray().then((reports) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(StatusCodes.OK).json(reports);
+    });
+  } catch {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving reports.');
+  }
+};
+
+// - GET /reports/by-user/:user-id
+reportController.getReportsByUser = async function (req, res) {
+  // #swagger.tags = ['Reports']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
+  const targetString = String(req.params.animal_id);
+  const target = new ObjectId(targetString);
+  try {
+    const result = await db.getDatabase().db('WildlifeAPI').collection('Reports').find({user_id: target});
+    result.toArray().then((reports) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(StatusCodes.OK).json(reports);
+    });
+  } catch {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving reports.');
+  }
+};
 
 // - Post /reports
 // Example ↓↓
@@ -37,8 +91,6 @@ reportController.addReport = async function (req, res) {
   }
 };
 
-// - GET /reports/:id
-// - GET /reports/by-animal/:animal-id
 // - PUT /reports/:id
 
 // - DELETE /reports/:id

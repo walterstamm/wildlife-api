@@ -50,7 +50,7 @@ animalController.getAnimalsByCategory = async function (req, res) {
   // #swagger.responses[500] = {description: "Internal Server Error"}
   const target = req.params.category;
   try {
-    const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
+    const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find({category: target});
     result.toArray().then((animals) => {
       res.setHeader('Content-Type', 'application/json');
       res.status(StatusCodes.OK).json(animals);

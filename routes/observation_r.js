@@ -3,6 +3,18 @@ const router = new express.Router();
 const observationController = require('../controllers/observations_c.js');
 const validate = require('../utilities/validation.js');
 
+router.get('/', observationController.getAllObservations);
+
+router.get('/:id',
+    validate.idRule(),
+    validate.checkId,
+    observationController.getOneObservation);
+
+router.get('/by-animal/:animal_id',
+    validate.idRule(),
+    validate.checkId,
+    observationController.getObservationsByAnimal);
+
 router.post('/',
     validate.observationRules(),
     validate.checkObservation,
