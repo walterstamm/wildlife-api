@@ -11,7 +11,7 @@ router.get('/:id',
     observationController.getOneObservation);
 
 router.get('/by-animal/:animal_id',
-    validate.idRule(),
+    validate.animalIdRule(),
     validate.checkId,
     observationController.getObservationsByAnimal);
 

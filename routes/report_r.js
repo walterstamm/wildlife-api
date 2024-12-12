@@ -12,7 +12,7 @@ router.get('/:id',
 );
 
 router.get('/by-user/:user_id',
-    validate.idRule(),
+    validate.userIdRule(),
     validate.checkId,
     reportController.getReportsByUser
 );

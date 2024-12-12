@@ -6,6 +6,14 @@ validate.idRule = () => {
     return [param('id').isMongoId()];
 };
 
+validate.animalIdRule = () => {
+  return [param('animal_id').isMongoId()];
+};
+
+validate.userIdRule = () => {
+  return [param('user_id').isMongoId()];
+};
+
 validate.checkId = (req, res, next) => {
     let errors = [];
     errors = validationResult(req);
