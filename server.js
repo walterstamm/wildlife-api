@@ -3,6 +3,8 @@ const passport = require('passport');
 const session = require('express-session');
 const Strategy = require('passport-github2');
 
+const usersController = require('./controllers/users_c.js');
+
 const app = express();
 
 // Serve static files from the "utilities" directory
@@ -26,6 +28,59 @@ app.use(session({
     maxAge: 3600000, // 1 hour
   }
 }));
+
+// Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Configure passport to use the GitHub strategy
+passport.use(new Strategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.GITHUB_CALLBACK_URL,
+}, async (_accessToken, _refreshToken, profile, done) => {
+  try {
+    // Write query to retrieve the user by profile id
+    const user = usersController.getUserByProfileId(profile.id);
+
+    if (!user) {
+      // If user is not found, create a new user
+      const newUser = usersController.addUser({
+        profileId: profile.id,
+        username: profile.username,
+        displayName: profile.displayName,
+        profileUrl: profile.profileUrl,
+      });
+      return done(null, newUser);
+    }
+    return done(null, profile);
+  } catch (error) {
+    return done(error);
+  }
+}));
+
+// Serialize user
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+// Deserialize user
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await usersController.getUserById(id);
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
+});
+
+app.get('/auth/github/callback', passport.authenticate('github', {
+  failureRedirect: '/api-docs',
+  session: false,
+}), (req, res) => {
+  req.session.user = req.user;
+  res.redirect('/');
+});
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
