@@ -43,10 +43,10 @@ app.get('/', (_req, res) => {
   res.send(`
     <html>
       <head>
-        <link rel="stylesheet" type="text/css" href="/utilities/styles.css">
+        <link rel="stylesheet" type="text/css" href="/utilities/static/styles.css">
       </head>
       <body>
-        <img src="/utilities/green-check-mark.png" alt="Wildlife Observation API" class="api-status">
+        <img src="/utilities/static/green-check-mark.png" alt="Wildlife Observation API" class="api-status">
         <div class="status-content">
           <h1>API is running</h1>
           <p>Welcome to the Wildlife Observation API</p>

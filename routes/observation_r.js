@@ -1,7 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 const observationController = require('../controllers/observations_c.js');
-const validate = require('../utilities/validation.js');
+const validate = require('../utilities/js/validation.js');
 
 router.get('/', observationController.getAllObservations);
 
