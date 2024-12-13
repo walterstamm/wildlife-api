@@ -1,3 +1,4 @@
+const { StatusCodes } = require('http-status-codes');
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
@@ -100,16 +101,6 @@ const limiter = rateLimit({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Middleware to handle errors
-
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    message: `Something went wrong while querying ${req.originalUrl}`, 
-  });
-});
-
 app.get('/', (_req, res) => {
   res.send(`
     <html>
@@ -133,6 +124,15 @@ app.get('/', (_req, res) => {
 app.use('/', limiter);
 app.use('/', routes);
 app.use('/api-docs', apiDocsRoute);
+
+// Middleware to handle errors
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    message: `Something went wrong while querying ${req.originalUrl}`, 
+  });
+});
 
 mongoDb.initDb((err) => {
   if (err) {
