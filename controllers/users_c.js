@@ -80,8 +80,29 @@ userController.getUserById = async function (req, res) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving users.');
   }
 };
-// - PUT /users/:id
 
+// - GET /users/profile/:id
+userController.getUserProfileById = async function (req, res) {
+  // #swagger.tags = ['Users']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
+  const targetString = String(req.params.id);
+  try {
+    const result = await db
+      .getDatabase()
+      .db('WildlifeAPI')
+      .collection('Users')
+      .find({ githubId: targetString });
+    result.toArray().then((user) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(StatusCodes.OK).json(user);
+    });
+  } catch {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving users.');
+  }
+};
+
+// - PUT /users/:id
 userController.editUserById = async function (req, res) {
   // #swagger.tags = ['Users']
   // #swagger.responses[200] = {description: "Success"}
