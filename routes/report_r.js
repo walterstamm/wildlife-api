@@ -3,8 +3,28 @@ const router = new express.Router();
 const reportController = require('../controllers/report_c.js');
 const validate = require('../utilities/validation.js');
 
-router.post('/', reportController.addReport);
+router.get('/', reportController.getAllReports);
 
-router.delete('/:id', reportController.deleteReportById);
+router.get('/:id',
+    validate.idRule(),
+    validate.checkId,
+    reportController.getOneReport
+);
+
+router.get('/by-user/:user_id',
+    validate.userIdRule(),
+    validate.checkId,
+    reportController.getReportsByUser
+);
+
+router.post('/',
+    validate.reportRules(),
+    validate.checkReport,
+    reportController.addReport);
+
+router.delete('/:id',
+    validate.idRule(),
+    validate.checkId,
+    reportController.deleteReportById);
 
 module.exports = router;
