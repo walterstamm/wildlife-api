@@ -1,4 +1,8 @@
 const express = require('express');
+const passport = require('passport');
+const session = require('express-session');
+const Strategy = require('passport-github2');
+
 const app = express();
 
 // Serve static files from the "utilities" directory
@@ -10,6 +14,18 @@ const rateLimit = require('express-rate-limit');
 const routes = require('./routes');
 const apiDocsRoute = require('./routes/api-docs');
 const mongoDb = require('./database/data');
+
+// Session configuration for passport
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'development',
+    httpOnly: true,
+    maxAge: 3600000, // 1 hour
+  }
+}));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
