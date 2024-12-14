@@ -98,7 +98,7 @@ userController.deleteUserById = async function (req, res) {
     const database = await db.getDatabase();
     const userCollection = database.db('WildlifeAPI').collection('Users');
 
-    const result = await userCollection.deleteOne({ _id: ObjectId.createFromHexString(Number(id)) });
+    const result = await userCollection.deleteOne({ _id: ObjectId.createFromHexString(id) });
 
     if (result.deletedCount == 1) {
       console.log('deleted');
