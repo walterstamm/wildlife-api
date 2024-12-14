@@ -20,71 +20,64 @@ const apiDocsRoute = require('./routes/api-docs');
 const mongoDb = require('./database/data');
 
 // Session configuration for passport
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === 'development',
-      httpOnly: true,
-      maxAge: 3600000 // 1 hour
-    }
-  })
-);
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'development',
+    httpOnly: true,
+    maxAge: 3600000, // 1 hour
+  }
+}));
 
 // Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Configure passport to use the GitHub strategy
-passport.use(
-  new Strategy(
-    {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: process.env.GITHUB_CALLBACK_URL
-    },
-    async (_accessToken, _refreshToken, profile, done) => {
-      try {
-        // Write query to retrieve the user by profile id
-        const user = await db
-          .getDatabase()
-          .db('WildlifeAPI')
-          .collection('Users')
-          .findOne({ username: profile.username });
+passport.use(new Strategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.GITHUB_CALLBACK_URL,
+}, async (_accessToken, _refreshToken, profile, done) => {
+  try {
+    // Write query to retrieve the user by profile id
+    const user = await db
+      .getDatabase()
+      .db('WildlifeAPI')
+      .collection('Users')
+      .findOne({ username: profile.username });
 
-        if (!user) {
-          // If user is not found, create a new user
-          const newUser = {
-            githubId: profile.id,
-            username: profile.username,
-            displayName: profile.displayName,
-            profileUrl: profile.profileUrl
-          };
+    if (!user) {
+      // If user is not found, create a new user
+      const newUser = {
+        githubId: profile.id,
+        username: profile.username,
+        displayName: profile.displayName,
+        profileUrl: profile.profileUrl,
+      };
 
-          const result = await db
-            .getDatabase()
-            .db('WildlifeAPI')
-            .collection('Users')
-            .insertOne(newUser);
+      const result = await db
+        .getDatabase()
+        .db('WildlifeAPI')
+        .collection('Users')
+        .insertOne(newUser);
 
-          const createdUser = await db
-            .getDatabase()
-            .db('WildlifeAPI')
-            .collection('Users')
-            .findOne({ _id: result.insertedId });
+      const createdUser = await db
+        .getDatabase()
+        .db('WildlifeAPI')
+        .collection('Users')
+        .findOne({ _id: result.insertedId });
 
-          return done(null, createdUser);
-        }
-
-        return done(null, user);
-      } catch (error) {
-        return done(error);
-      }
+      return done(null, createdUser);
     }
-  )
-);
+
+    return done(null, user);
+  } catch (error) {
+    return done(error);
+  }
+}));
 
 // Serialize user
 passport.serializeUser((user, done) => {
@@ -101,17 +94,13 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.get(
-  '/auth/github/callback',
-  passport.authenticate('github', {
-    failureRedirect: '/api-docs',
-    session: false
-  }),
-  (req, res) => {
-    req.session.user = req.user;
-    res.redirect('/');
-  }
-);
+app.get('/auth/github/callback', passport.authenticate('github', {
+  failureRedirect: '/api-docs',
+  session: false,
+}), (req, res) => {
+  req.session.user = req.user;
+  res.redirect('/');
+});
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -124,28 +113,12 @@ app.use((req, res, next) => {
 });
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: 'Too many requests from this IP address. Please try again after an hour.'
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: 'Too many requests from this IP address. Please try again after an hour.',
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-process.on('uncaughtException', (err, origin) => {
-  console.error(`\nException found! ${err}\n` + `Exception origin: ${origin}`);
-});
-
-process.on('unhandledRejection', (reason, promise) => {
-  console.log(`\nUnhandled rejection! ${reason}\n` + `Rejection origin: ${promise}`);
-});
-
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    message: `Something went wrong while querying ${req.originalUrl}`
-  });
-});
 
 app.get('/', (req, res) => {
   const { user } = req.session;
@@ -171,6 +144,7 @@ app.get('/', (req, res) => {
   `);
 });
 
+
 // Protect all routes with rate limiter to prevent abuse
 app.use('/', limiter);
 app.use('/', routes);
@@ -181,7 +155,7 @@ app.use('/api-docs', apiDocsRoute);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    message: `Something went wrong while querying ${req.originalUrl}`
+    message: `Something went wrong while querying ${req.originalUrl}`, 
   });
 });
 
