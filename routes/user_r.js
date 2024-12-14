@@ -93,6 +93,6 @@ router.put('/:id', validate.userRules(), validate.checkUser, usersController.cre
  *       404:
  *         description: User not found
  */
-router.delete('/:username', usersController.deleteUserById);
+router.delete('/:id', usersController.deleteUserById);
 
 module.exports = router;
