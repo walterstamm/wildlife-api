@@ -49,32 +49,28 @@ ${errorString}`);
 };
 
 validate.userRules = () => {
-    return [
-        body('fname').trim().escape().isLength({ min: 1 }).withMessage('Please provide a first name.'),
-        body('lname').trim().escape().isLength({ min: 1 }).withMessage('Please provide a last name.'),
-        body('username').trim().escape().isLength({ min: 1 }).withMessage('Please include a username.'),
-        body('email').trim().escape().isEmail().withMessage('Please provide an email address.'),
-        //If we want to make password requirements stricter, message Andrew to update the following validation rule
-        body('password').trim().escape().isStrongPassword({minLength: 6, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0}).withMessage(`Please provide a password. Current password requirements:\nLength: at least 6 characters\nNumbers: at least 1 number(0-9)\nLetters: at least 1 each uppercase and lowercase`),
-        body('state').trim().escape().isLength({ min: 1 }). withMessage('Please provide a state, province, etc.'),
-        body('country').trim().escape().isLength({ min: 1 }).withMessage('Please provide a country.')
-    ]
+  return [
+    body('githubId').trim().escape().isLength({ min: 1 }).withMessage('Please provide a valid GitHub id.'),
+    body('username').trim().escape().isLength({ min: 1 }).withMessage('Please provide a valid GitHub username.'),
+    body('displayName').trim().escape().isLength({ min: 1 }).withMessage('Please provide a valid GitHub display name.'),
+    body('profileUrl').trim().escape().isURL().withMessage('Please provide a valid GitHub profile url.'),
+  ]
 };
 
 validate.checkUser = (req, res, next) => {
-    let errors = [];
-    errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const errorString = errors.errors
-        .map((error) => {
-          return `${error.path}: ${error.msg}`;
-        })
-        .join('\n');
-      res.status(StatusCodes.BAD_REQUEST).send(`Invalid user:
-Errors detected:
-${errorString}`);
-    }
-    next();
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorString = errors.errors
+      .map((error) => {
+        return `${error.path}: ${error.msg}`;
+      })
+      .join('\n');
+    res.status(StatusCodes.BAD_REQUEST).send(`Invalid user:
+  Errors detected:
+  ${errorString}`);
+  }
+  next();
 };
 
 validate.observationRules = () => {
