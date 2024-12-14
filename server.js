@@ -22,20 +22,28 @@ app.use((req, res, next) => {
 });
 
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    message: 'Too many requests from this IP address. Please try again after an hour.',
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Too many requests from this IP address. Please try again after an hour.'
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware to handle errors
 
+process.on('uncaughtException', (err, origin) => {
+  console.error(`\nException found! ${err}\n` + `Exception origin: ${origin}`);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.log(`\nUnhandled rejection! ${reason}\n` + `Rejection origin: ${promise}`);
+});
+
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
-    message: `Something went wrong while querying ${req.originalUrl}`, 
+    message: `Something went wrong while querying ${req.originalUrl}`
   });
 });
 
@@ -56,7 +64,6 @@ app.get('/', (_req, res) => {
     </html>
   `);
 });
-
 
 // Protect all routes with rate limiter to prevent abuse
 app.use('/', limiter);
