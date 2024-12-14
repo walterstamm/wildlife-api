@@ -12,6 +12,10 @@ const doc = {
   produces: ['application/json'],
   tags: [
     {
+      name: 'General',
+      description: 'Endpoints for general operations like login and logout',
+    },
+    {
       name: 'Animals',
       description: 'Endpoints for animals in the database',
     },
