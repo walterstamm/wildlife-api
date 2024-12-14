@@ -53,11 +53,13 @@ validate.userRules = () => {
     body('githubId').trim().escape().isLength({ min: 1 }).withMessage('Please provide a valid GitHub id.'),
     body('username').trim().escape().isLength({ min: 1 }).withMessage('Please provide a valid GitHub username.'),
     body('displayName').trim().escape().isLength({ min: 1 }).withMessage('Please provide a valid GitHub display name.'),
-    body('profileUrl').trim().escape().isURL().withMessage('Please provide a valid GitHub profile url.'),
+    body('profileUrl').trim().isURL().withMessage('Please provide a valid GitHub profile url.'),
   ]
 };
 
 validate.checkUser = (req, res, next) => {
+  console.log('profileUrl:', req.body.profileUrl); // Log the profileUrl value
+
   let errors = [];
   errors = validationResult(req);
   if (!errors.isEmpty()) {
