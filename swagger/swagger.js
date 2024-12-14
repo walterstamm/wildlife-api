@@ -12,10 +12,6 @@ const doc = {
   produces: ['application/json'],
   tags: [
     {
-      name: 'General',
-      description: 'Endpoints for general operations like login and logout',
-    },
-    {
       name: 'Animals',
       description: 'Endpoints for animals in the database',
     },
@@ -30,6 +26,10 @@ const doc = {
     {
       name: 'Reports',
       description: 'Endpoints for reports in the database',
+    },
+    {
+      name: 'General',
+      description: 'Endpoints for general operations like login and logout',
     },
   ],
   schemes: [process.env.MAIN_SCHEME],
