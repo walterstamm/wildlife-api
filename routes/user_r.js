@@ -19,27 +19,18 @@ router.get('/:id', usersController.getUserById);
  *           schema:
  *             type: object
  *             properties:
- *               fname:
+ *               githubId:
  *                 type: string
- *                 example: "John"
- *               lname:
- *                 type: string
- *                 example: "Doe"
- *               email:
- *                 type: string
- *                 example: "JD@test.com"
+ *                 example: "78896541"
  *               username:
  *                 type: string
- *                 example: "JD"
- *               password:
+ *                 example: "johndoegithub"
+ *               displayName:
  *                 type: string
- *                 example: "123"
- *               state:
+ *                 example: "John Doe (GitHub)"
+ *               profileUrl:
  *                 type: string
- *                 example: "Utah"
- *               country:
- *                 type: string
- *                 example: "USA"
+ *                 example: "https://github.com/johndoegithub"
  *     responses:
  *       200:
  *         description: User added successfully
@@ -48,27 +39,18 @@ router.get('/:id', usersController.getUserById);
  *             schema:
  *               type: object
  *               properties:
- *                 id:
+ *                 githubId:
  *                   type: string
- *                   example: "12345"
- *                 fname:
- *                   type: string
- *                   example: "John"
- *                 lname:
- *                   type: string
- *                   example: "Doe"
- *                 email:
- *                   type: string
- *                   example: "JD@test.com"
+ *                   example: "78896541"
  *                 username:
  *                   type: string
- *                   example: "JD"
- *                 state:
+ *                   example: "johndoegithub"
+ *                 displayName:
  *                   type: string
- *                   example: "Utah"
- *                 country:
+ *                   example: "John Doe (GitHub)"
+ *                 profileUrl:
  *                   type: string
- *                   example: "USA"
+ *                   example: "https://github.com/johndoegithub"
  *       400:
  *         description: Invalid input
  */
