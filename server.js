@@ -47,7 +47,7 @@ passport.use(new Strategy({
       .getDatabase()
       .db('WildlifeAPI')
       .collection('Users')
-      .findOne({ githubId: profile.username });
+      .findOne({ username: profile.username });
 
     if (!user) {
       // If user is not found, create a new user
@@ -72,6 +72,8 @@ passport.use(new Strategy({
 
       return done(null, createdUser);
     }
+
+    return done(null, user);
   } catch (error) {
     return done(error);
   }
