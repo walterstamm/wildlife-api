@@ -120,13 +120,19 @@ const limiter = rateLimit({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (_req, res) => {
+app.get('/', (req, res) => {
+  const { user } = req.session;
+  const isLoggedIn = user !== undefined;
+
   res.send(`
     <html>
       <head>
         <link rel="stylesheet" type="text/css" href="/utilities/static/styles.css">
       </head>
       <body>
+        <nav class="auth-links">
+          ${isLoggedIn ? `Welcome, ${user.displayName} <a href="/logout">Logout</a>` : `<a href="/login">Login</a>`}
+        </nav>
         <img src="/utilities/static/green-check-mark.png" alt="Wildlife Observation API" class="api-status">
         <div class="status-content">
           <h1>API is running</h1>
