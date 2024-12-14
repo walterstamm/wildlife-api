@@ -23,6 +23,10 @@
     {
       "name": "Reports",
       "description": "Endpoints for reports in the database"
+    },
+    {
+      "name": "General",
+      "description": "Endpoints for general operations like login and logout"
     }
   ],
   "schemes": [
@@ -32,6 +36,38 @@
     "application/json"
   ],
   "paths": {
+    "/login": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/animals/": {
       "get": {
         "tags": [
@@ -237,25 +273,16 @@
             "schema": {
               "type": "object",
               "properties": {
-                "fname": {
-                  "example": "any"
-                },
-                "lname": {
-                  "example": "any"
-                },
-                "email": {
+                "githubId": {
                   "example": "any"
                 },
                 "username": {
                   "example": "any"
                 },
-                "password": {
+                "displayName": {
                   "example": "any"
                 },
-                "state": {
-                  "example": "any"
-                },
-                "country": {
+                "profileUrl": {
                   "example": "any"
                 }
               }
@@ -265,6 +292,9 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "201": {
+            "description": "Created"
           },
           "500": {
             "description": "Internal Server Error"
@@ -316,25 +346,16 @@
             "schema": {
               "type": "object",
               "properties": {
-                "fname": {
-                  "example": "any"
-                },
-                "lname": {
-                  "example": "any"
-                },
-                "email": {
+                "githubId": {
                   "example": "any"
                 },
                 "username": {
                   "example": "any"
                 },
-                "state": {
+                "displayName": {
                   "example": "any"
                 },
-                "country": {
-                  "example": "any"
-                },
-                "password": {
+                "profileUrl": {
                   "example": "any"
                 }
               }
@@ -344,6 +365,9 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "201": {
+            "description": "Created"
           },
           "500": {
             "description": "Internal Server Error"
@@ -374,6 +398,23 @@
       }
     },
     "/observations/": {
+      "get": {
+        "tags": [
+          "Observations"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "post": {
         "tags": [
           "Observations"
@@ -413,6 +454,31 @@
       }
     },
     "/observations/{id}": {
+      "get": {
+        "tags": [
+          "Observations"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Observations"
@@ -436,7 +502,51 @@
         }
       }
     },
+    "/observations/by-animal/{animal_id}": {
+      "get": {
+        "tags": [
+          "Observations"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "animal_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/reports/": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "post": {
         "tags": [
           "Reports"
@@ -479,6 +589,31 @@
       }
     },
     "/reports/{id}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Reports"
@@ -487,6 +622,33 @@
         "parameters": [
           {
             "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reports/by-user/{user_id}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
             "in": "path",
             "required": true,
             "type": "string"

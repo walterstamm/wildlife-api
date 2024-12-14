@@ -1,7 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 const animalController = require('../controllers/animal_c');
-const validate = require('../utilities/validation');
+const validate = require('../utilities/js/validation');
 
 router.get('/', animalController.getAllAnimals);
 

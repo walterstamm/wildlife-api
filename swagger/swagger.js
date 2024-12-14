@@ -27,6 +27,10 @@ const doc = {
       name: 'Reports',
       description: 'Endpoints for reports in the database',
     },
+    {
+      name: 'General',
+      description: 'Endpoints for general operations like login and logout',
+    },
   ],
   schemes: [process.env.MAIN_SCHEME],
 };

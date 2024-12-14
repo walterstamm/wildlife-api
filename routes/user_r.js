@@ -1,7 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 const usersController = require('../controllers/users_c.js');
-const validate = require('../utilities/validation.js');
+const validate = require('../utilities/js/validation.js');
 
 router.get('/', usersController.getAllUsers);
 
@@ -19,27 +19,18 @@ router.get('/:id', usersController.getUserById);
  *           schema:
  *             type: object
  *             properties:
- *               fname:
+ *               githubId:
  *                 type: string
- *                 example: "John"
- *               lname:
- *                 type: string
- *                 example: "Doe"
- *               email:
- *                 type: string
- *                 example: "JD@test.com"
+ *                 example: "78896541"
  *               username:
  *                 type: string
- *                 example: "JD"
- *               password:
+ *                 example: "johndoegithub"
+ *               displayName:
  *                 type: string
- *                 example: "123"
- *               state:
+ *                 example: "John Doe (GitHub)"
+ *               profileUrl:
  *                 type: string
- *                 example: "Utah"
- *               country:
- *                 type: string
- *                 example: "USA"
+ *                 example: "https://github.com/johndoegithub"
  *     responses:
  *       200:
  *         description: User added successfully
@@ -48,33 +39,24 @@ router.get('/:id', usersController.getUserById);
  *             schema:
  *               type: object
  *               properties:
- *                 id:
+ *                 githubId:
  *                   type: string
- *                   example: "12345"
- *                 fname:
- *                   type: string
- *                   example: "John"
- *                 lname:
- *                   type: string
- *                   example: "Doe"
- *                 email:
- *                   type: string
- *                   example: "JD@test.com"
+ *                   example: "78896541"
  *                 username:
  *                   type: string
- *                   example: "JD"
- *                 state:
+ *                   example: "johndoegithub"
+ *                 displayName:
  *                   type: string
- *                   example: "Utah"
- *                 country:
+ *                   example: "John Doe (GitHub)"
+ *                 profileUrl:
  *                   type: string
- *                   example: "USA"
+ *                   example: "https://github.com/johndoegithub"
  *       400:
  *         description: Invalid input
  */
-router.post('/', validate.userRules(), validate.checkUser, usersController.addUser);
+router.post('/', validate.userRules(), validate.checkUser, usersController.createOrUpdateUser);
 
-router.put('/:id', validate.userRules(), validate.checkUser, usersController.editUserById);
+router.put('/:id', validate.userRules(), validate.checkUser, usersController.createOrUpdateUser);
 /**
  * @swagger
  * /users/{username}:
@@ -93,6 +75,6 @@ router.put('/:id', validate.userRules(), validate.checkUser, usersController.edi
  *       404:
  *         description: User not found
  */
-router.delete('/:id', validate.idRule(), validate.checkId, usersController.deleteUserById);
+router.delete('/:id', usersController.deleteUserById);
 
 module.exports = router;

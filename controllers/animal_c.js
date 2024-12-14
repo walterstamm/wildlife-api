@@ -17,7 +17,9 @@ animalController.getAllAnimals = async function (req, res) {
       res.status(StatusCodes.OK).json(animals);
     });
   } catch {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving animals.');
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: 'There was an error retrieving animals.'
+    });
   }
 };
 
@@ -39,7 +41,9 @@ animalController.getOneAnimal = async function (req, res) {
       res.status(StatusCodes.OK).json(animals);
     });
   } catch {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving animals.');
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: 'There was an error retrieving the animal.'
+    });
   }
 };
 
@@ -56,7 +60,9 @@ animalController.getAnimalsByCategory = async function (req, res) {
       res.status(StatusCodes.OK).json(animals);
     });
   } catch {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving animals.');
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: 'There was an error retrieving animals by category.'
+    });
   }
 };
 
@@ -86,7 +92,7 @@ animalController.addAnimal = async function (req, res) {
 
     return res.status(StatusCodes.OK).json(result);
   } catch (error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to add animal' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ messasge: error.message });
   }
 };
 
@@ -117,7 +123,9 @@ animalController.editAnimalById = async function (req, res) {
     return res.status(StatusCodes.OK).json(result);
   } catch (error) {
     console.log('Error editing animal!', error);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json('500 Error!');
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: 'Failed to edit animal.'
+    });
   }
 };
 
@@ -141,7 +149,7 @@ animalController.deleteAnimalById = async function (req, res) {
 
     return res.status(StatusCodes.OK).json(result);
   } catch (error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to delete animal' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
   }
 };
 
