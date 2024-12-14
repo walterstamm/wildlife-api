@@ -4,6 +4,7 @@ const passport = require('passport');
 const session = require('express-session');
 const Strategy = require('passport-github2');
 
+const db = require('./database/data');
 const usersController = require('./controllers/users_c.js');
 
 const app = express();
@@ -42,19 +43,35 @@ passport.use(new Strategy({
 }, async (_accessToken, _refreshToken, profile, done) => {
   try {
     // Write query to retrieve the user by profile id
-    const user = usersController.getUserByProfileId(profile.id);
+    const user = await db
+      .getDatabase()
+      .db('WildlifeAPI')
+      .collection('Users')
+      .findOne({ githubId: profile.username });
 
     if (!user) {
       // If user is not found, create a new user
-      const newUser = usersController.addUser({
-        profileId: profile.id,
+      const newUser = {
+        githubId: profile.id,
         username: profile.username,
         displayName: profile.displayName,
         profileUrl: profile.profileUrl,
-      });
-      return done(null, newUser);
+      };
+
+      const result = await db
+        .getDatabase()
+        .db('WildlifeAPI')
+        .collection('Users')
+        .insertOne(newUser);
+
+      const createdUser = await db
+        .getDatabase()
+        .db('WildlifeAPI')
+        .collection('Users')
+        .findOne({ _id: result.insertedId });
+
+      return done(null, createdUser);
     }
-    return done(null, profile);
   } catch (error) {
     return done(error);
   }
