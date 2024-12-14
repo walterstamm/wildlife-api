@@ -72,9 +72,9 @@ router.get('/:id', usersController.getUserById);
  *       400:
  *         description: Invalid input
  */
-router.post('/', validate.userRules(), validate.checkUser, usersController.addUser);
+router.post('/', validate.userRules(), validate.checkUser, usersController.createOrUpdateUser);
 
-router.put('/:id', validate.userRules(), validate.checkUser, usersController.editUserById);
+router.put('/:id', validate.userRules(), validate.checkUser, usersController.createOrUpdateUser);
 /**
  * @swagger
  * /users/{username}:
@@ -93,6 +93,6 @@ router.put('/:id', validate.userRules(), validate.checkUser, usersController.edi
  *       404:
  *         description: User not found
  */
-router.delete('/:id', validate.idRule(), validate.checkId, usersController.deleteUserById);
+router.delete('/:username', usersController.deleteUserById);
 
 module.exports = router;
