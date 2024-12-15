@@ -75,11 +75,9 @@ userController.createOrUpdateUser = async function (req, res) {
     );
 
     if (result.upsertedCount > 0) {
-      console.log('New user created');
       return res.status(StatusCodes.CREATED).json(result);
     }
     if (result.modifiedCount > 0) {
-      console.log('User updated');
       return res.status(StatusCodes.OK).json(result);
     }
 
