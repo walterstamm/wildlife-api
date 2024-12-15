@@ -273,6 +273,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "profileUrl": {
+                  "example": "any"
+                },
                 "githubId": {
                   "example": "any"
                 },
@@ -280,9 +283,6 @@
                   "example": "any"
                 },
                 "displayName": {
-                  "example": "any"
-                },
-                "profileUrl": {
                   "example": "any"
                 }
               }
@@ -346,6 +346,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "profileUrl": {
+                  "example": "any"
+                },
                 "githubId": {
                   "example": "any"
                 },
@@ -353,9 +356,6 @@
                   "example": "any"
                 },
                 "displayName": {
-                  "example": "any"
-                },
-                "profileUrl": {
                   "example": "any"
                 }
               }
@@ -468,6 +468,49 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Observations"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "animal_id": {
+                  "example": "any"
+                },
+                "age": {
+                  "example": "any"
+                },
+                "gender": {
+                  "example": "any"
+                },
+                "behavior": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -603,6 +646,52 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reports"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "observation_id": {
+                  "example": "any"
+                },
+                "date": {
+                  "example": "any"
+                },
+                "time": {
+                  "example": "any"
+                },
+                "weather": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {

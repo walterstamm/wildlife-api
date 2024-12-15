@@ -75,18 +75,15 @@ userController.createOrUpdateUser = async function (req, res) {
     );
 
     if (result.upsertedCount > 0) {
-      console.log('New user created');
       return res.status(StatusCodes.CREATED).json(result);
     }
     if (result.modifiedCount > 0) {
-      console.log('User updated');
       return res.status(StatusCodes.OK).json(result);
     }
 
     console.log('No changes made to the user');
     return res.status(StatusCodes.OK).json({ message: 'No changes made to the user' });
   } catch (error) {
-    console.log('Error editing user!', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
   }
 };
