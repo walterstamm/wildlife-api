@@ -1,10 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
 const userController = require('../../controllers/users_c');
 const db = require('../../database/data');
-const bcrypt = require('bcryptjs');
 
 jest.mock('../../database/data');
-jest.mock('bcryptjs');
 
 const res = {
   status: jest.fn().mockReturnThis(),
@@ -13,54 +11,47 @@ const res = {
 
 const req = {
   body: {
-    fname: 'Victory',
-    lname: 'Chibueze',
-    email: 'victorychibueze@yahoo.com',
+    githubId: '1234567890',
+    displayName: 'Victory Chibueze',
     username: 'victorychhi',
-    password: 'password123',
-    state: 'Lagos',
-    country: 'Nigeria'
+    profileUrl: 'https://github.com/victorychhi'
   }
 };
 
-describe('addUser', () => {
-  it('should add a user and return success response when data is valid', async () => {
-    const mockInsertResult = { insertedId: '12345' };
-
-    bcrypt.hash.mockResolvedValue('hashedPassword123');
+describe('createOrUpdateUser', () => {
+  it('should add or update a user and return success response when data is valid', async () => {
+    const mockUpdateResult = { matchedCount: 1, modifiedCount: 1, upsertedId: '12345' };
 
     const mockDb = {
       db: jest.fn().mockReturnValue({
         collection: jest.fn().mockReturnValue({
-          insertOne: jest.fn().mockResolvedValue(mockInsertResult)
+          updateOne: jest.fn().mockResolvedValue(mockUpdateResult)
         })
       })
     };
 
     db.getDatabase.mockResolvedValue(mockDb);
 
-    await userController.addUser(req, res);
+    await userController.createOrUpdateUser(req, res);
 
     expect(res.status).toHaveBeenCalledWith(StatusCodes.OK);
-    expect(res.json).toHaveBeenCalledWith(mockInsertResult);
+    expect(res.json).toHaveBeenCalledWith(mockUpdateResult);
   });
 
-  it('should return error response if database insert fails', async () => {
+  it('should return error response if database update fails', async () => {
     const mockDb = {
       db: jest.fn().mockReturnValue({
         collection: jest.fn().mockReturnValue({
-          insertOne: jest.fn().mockRejectedValue(new Error('Database insert failed'))
+          updateOne: jest.fn().mockRejectedValue(new Error('Database update failed'))
         })
       })
     };
 
-    bcrypt.hash.mockResolvedValue('hashedPassword123');
-
     db.getDatabase.mockResolvedValue(mockDb);
 
-    await userController.addUser(req, res);
+    await userController.createOrUpdateUser(req, res);
 
     expect(res.status).toHaveBeenCalledWith(StatusCodes.INTERNAL_SERVER_ERROR);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Failed to add user' });
+    expect(res.json).toHaveBeenCalledWith({ message: 'Database update failed' });
   });
 });
