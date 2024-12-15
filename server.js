@@ -8,6 +8,7 @@ const db = require('./database/data');
 const usersController = require('./controllers/users_c.js');
 
 const app = express();
+app.set('trust proxy', 1)
 
 // Serve static files from the "utilities" directory
 app.use('/utilities', express.static('utilities'));
