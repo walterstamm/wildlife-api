@@ -5,26 +5,26 @@ const validate = require('../utilities/js/validation.js');
 
 router.get('/', reportController.getAllReports);
 
-router.get('/:id',
-    validate.idRule(),
-    validate.checkId,
-    reportController.getOneReport
+router.get('/:id', validate.idRule(), validate.checkId, reportController.getOneReport);
+
+router.get(
+  '/by-user/:user_id',
+  validate.userIdRule(),
+  validate.checkId,
+  reportController.getReportsByUser
 );
 
-router.get('/by-user/:user_id',
-    validate.userIdRule(),
-    validate.checkId,
-    reportController.getReportsByUser
+router.post('/', validate.reportRules(), validate.checkReport, reportController.addReport);
+
+router.put(
+  '/:id',
+  validate.reportRules(),
+  validate.checkReport,
+  validate.idRule(),
+  validate.checkId,
+  reportController.editReport
 );
 
-router.post('/',
-    validate.reportRules(),
-    validate.checkReport,
-    reportController.addReport);
-
-router.delete('/:id',
-    validate.idRule(),
-    validate.checkId,
-    reportController.deleteReportById);
+router.delete('/:id', validate.idRule(), validate.checkId, reportController.deleteReportById);
 
 module.exports = router;

@@ -17,7 +17,9 @@ observationController.getAllObservations = async function (req, res) {
       res.status(StatusCodes.OK).json(observations);
     });
   } catch {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving observations.');
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send('There was an error retrieving observations.');
   }
 };
 
@@ -39,7 +41,9 @@ observationController.getOneObservation = async function (req, res) {
       res.status(StatusCodes.OK).json(observations);
     });
   } catch {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving observations.');
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send('There was an error retrieving observations.');
   }
 };
 
@@ -51,16 +55,21 @@ observationController.getObservationsByAnimal = async function (req, res) {
   const targetString = String(req.params.animal_id);
   const target = new ObjectId(targetString);
   try {
-    const result = await db.getDatabase().db('WildlifeAPI').collection('Observations').find({animal_id: target});
+    const result = await db
+      .getDatabase()
+      .db('WildlifeAPI')
+      .collection('Observations')
+      .find({ animal_id: target });
     result.toArray().then((observations) => {
       res.setHeader('Content-Type', 'application/json');
       res.status(StatusCodes.OK).json(observations);
     });
   } catch {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('There was an error retrieving observations.');
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send('There was an error retrieving observations.');
   }
 };
-
 
 // - POST /observations
 // Example ↓↓
@@ -87,11 +96,44 @@ observationController.addObservation = async function (req, res) {
 
     return res.status(StatusCodes.OK).json(result);
   } catch (error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to add observation' });
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Failed to add observation' });
   }
-}
+};
 
 // - PUT /observations/:id
+
+observationController.editObservation = async function (req, res) {
+  // #swagger.tags = ['Observations']
+  // #swagger.responses[200] = {description: "Success"}
+  // #swagger.responses[500] = {description: "Internal Server Error"}
+  const observationId = ObjectId.createFromHexString(req.params.id);
+
+  const observationEdits = {
+    animal_id: req.body.animal_id,
+    age: req.body.age,
+    gender: req.body.gender,
+    behavior: req.body.behavior
+  };
+
+  try {
+    const database = await db.getDatabase();
+    const observationCollection = database.db('WildlifeAPI').collection('Observations');
+
+    const result = await observationCollection.replaceOne({ _id: observationId }, observationEdits);
+    if (result.modifiedCount) {
+      console.log('Observation Database Changed');
+    } else {
+      console.log('Error, Observation database unchanged');
+    }
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Failed to edit observation' });
+  }
+};
 
 // - DELETE /observations/:id
 observationController.deleteObservationById = async function (req, res) {
@@ -113,8 +155,10 @@ observationController.deleteObservationById = async function (req, res) {
 
     return res.status(StatusCodes.OK).json(result);
   } catch (error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to delete observation' });
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Failed to delete observation' });
   }
-}
+};
 
 module.exports = observationController;
