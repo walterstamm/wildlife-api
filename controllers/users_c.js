@@ -86,7 +86,6 @@ userController.createOrUpdateUser = async function (req, res) {
     console.log('No changes made to the user');
     return res.status(StatusCodes.OK).json({ message: 'No changes made to the user' });
   } catch (error) {
-    console.log('Error editing user!', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
   }
 };
