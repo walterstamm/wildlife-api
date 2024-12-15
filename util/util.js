@@ -14,11 +14,7 @@ const idInDatabase = async function(id, collectionName){
 
         const collection = database.db('WildlifeAPI').collection(collectionName);
         const matches = await collection.countDocuments({_id: target});
-        if(matches > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return matches > 0;
 
     } catch{
         return false;
