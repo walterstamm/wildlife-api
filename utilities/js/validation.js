@@ -24,6 +24,19 @@ validate.checkId = (req, res, next) => {
     next();
 };
 
+validate.categoryRule = () => {
+  return [param('category').trim().escape().notEmpty().isLength({min: 1})];
+}
+
+validate.checkCategory = (req, res, next) => {
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(StatusCodes.BAD_REQUEST).send("Using this endpoint requires a category. Please try again.");
+  }
+  next();
+}
+
 validate.animalRules = () => {
     return [
         body('category').trim().escape().notEmpty().isLength({ min: 1 }).withMessage('Please provide a category.'),
