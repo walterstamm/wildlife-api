@@ -95,7 +95,7 @@ observationController.addObservation = async function (req, res) {
     });
 
     return res.status(StatusCodes.OK).json(result);
-  } catch (error) {
+  } catch {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: 'Failed to add observation' });
@@ -128,7 +128,7 @@ observationController.editObservation = async function (req, res) {
       console.log('Error, Observation database unchanged');
     }
     return res.status(StatusCodes.OK).json(result);
-  } catch (error) {
+  } catch {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: 'Failed to edit observation' });
@@ -154,7 +154,7 @@ observationController.deleteObservationById = async function (req, res) {
     }
 
     return res.status(StatusCodes.OK).json(result);
-  } catch (error) {
+  } catch {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: 'Failed to delete observation' });

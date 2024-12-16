@@ -29,18 +29,12 @@
       "description": "Endpoints for general operations like login and logout"
     }
   ],
-  "schemes": [
-    "https"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["https"],
+  "produces": ["application/json"],
   "paths": {
     "/login": {
       "get": {
-        "tags": [
-          "General"
-        ],
+        "tags": ["General"],
         "description": "",
         "responses": {
           "200": {
@@ -54,9 +48,7 @@
     },
     "/logout": {
       "get": {
-        "tags": [
-          "General"
-        ],
+        "tags": ["General"],
         "description": "",
         "responses": {
           "200": {
@@ -70,13 +62,9 @@
     },
     "/animals/": {
       "get": {
-        "tags": [
-          "Animals"
-        ],
+        "tags": ["Animals"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "Success"
@@ -87,9 +75,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Animals"
-        ],
+        "tags": ["Animals"],
         "description": "",
         "parameters": [
           {
@@ -135,13 +121,9 @@
     },
     "/animals/{id}": {
       "get": {
-        "tags": [
-          "Animals"
-        ],
+        "tags": ["Animals"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -160,9 +142,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Animals"
-        ],
+        "tags": ["Animals"],
         "description": "",
         "parameters": [
           {
@@ -212,9 +192,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Animals"
-        ],
+        "tags": ["Animals"],
         "description": "",
         "parameters": [
           {
@@ -236,13 +214,9 @@
     },
     "/animals/by-category/{category}": {
       "get": {
-        "tags": [
-          "Animals"
-        ],
+        "tags": ["Animals"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "category",
@@ -263,13 +237,9 @@
     },
     "/users/": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "Success"
@@ -280,9 +250,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "",
         "parameters": [
           {
@@ -322,13 +290,9 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -347,9 +311,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "",
         "parameters": [
           {
@@ -393,9 +355,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "",
         "parameters": [
           {
@@ -417,13 +377,9 @@
     },
     "/observations/": {
       "get": {
-        "tags": [
-          "Observations"
-        ],
+        "tags": ["Observations"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "Success"
@@ -434,9 +390,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Observations"
-        ],
+        "tags": ["Observations"],
         "description": "",
         "parameters": [
           {
@@ -473,13 +427,9 @@
     },
     "/observations/{id}": {
       "get": {
-        "tags": [
-          "Observations"
-        ],
+        "tags": ["Observations"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -498,9 +448,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Observations"
-        ],
+        "tags": ["Observations"],
         "description": "",
         "parameters": [
           {
@@ -541,9 +489,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Observations"
-        ],
+        "tags": ["Observations"],
         "description": "",
         "parameters": [
           {
@@ -565,13 +511,9 @@
     },
     "/observations/by-animal/{animal_id}": {
       "get": {
-        "tags": [
-          "Observations"
-        ],
+        "tags": ["Observations"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "animal_id",
@@ -592,13 +534,9 @@
     },
     "/reports/": {
       "get": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "Success"
@@ -609,9 +547,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "description": "",
         "parameters": [
           {
@@ -651,13 +587,9 @@
     },
     "/reports/{id}": {
       "get": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -676,9 +608,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "description": "",
         "parameters": [
           {
@@ -722,9 +652,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "description": "",
         "parameters": [
           {
@@ -746,13 +674,9 @@
     },
     "/reports/by-user/{user_id}": {
       "get": {
-        "tags": [
-          "Reports"
-        ],
+        "tags": ["Reports"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "user_id",

@@ -23,10 +23,10 @@ router.post(
 
 router.put(
   '/:id',
-  validate.observationRules(),
-  validate.checkObservation,
   validate.idRule(),
   validate.checkId,
+  validate.observationRules(),
+  validate.checkObservation,
   observationController.editObservation
 );
 

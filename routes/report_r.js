@@ -18,10 +18,10 @@ router.post('/', validate.reportRules(), validate.checkReport, reportController.
 
 router.put(
   '/:id',
-  validate.reportRules(),
-  validate.checkReport,
   validate.idRule(),
   validate.checkId,
+  validate.reportRules(),
+  validate.checkReport,
   reportController.editReport
 );
 
