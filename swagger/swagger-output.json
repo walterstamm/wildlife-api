@@ -109,6 +109,15 @@
                 },
                 "diet": {
                   "example": "any"
+                },
+                "avg_lifespan_year": {
+                  "example": "any"
+                },
+                "avg_size_cm": {
+                  "example": "any"
+                },
+                "avg_weight_kg": {
+                  "example": "any"
                 }
               }
             }
@@ -178,6 +187,15 @@
                   "example": "any"
                 },
                 "diet": {
+                  "example": "any"
+                },
+                "avg_lifespan_year": {
+                  "example": "any"
+                },
+                "avg_size_cm": {
+                  "example": "any"
+                },
+                "avg_weight_kg": {
                   "example": "any"
                 }
               }

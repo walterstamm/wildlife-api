@@ -73,11 +73,14 @@ animalController.getAnimalsByCategory = async function (req, res) {
 // common_name: 'Aardvarks'
 // scientific_name: 'Orycteropus afer'
 // diet: 'Insectivore'
+// avg_lifespan_year: 23,
+// avg_size_cm: 166,
+// avg_weight_kg: 34 
 animalController.addAnimal = async function (req, res) {
   // #swagger.tags = ['Animals']
   // #swagger.responses[200] = {description: "Success"}
   // #swagger.responses[500] = {description: "Internal Server Error"}
-  const { category, common_name, scientific_name, diet } = req.body;
+  const { category, common_name, scientific_name, diet, avg_lifespan_year, avg_size_cm, avg_weight_kg } = req.body;
 
   try {
     const database = await db.getDatabase();
@@ -87,7 +90,10 @@ animalController.addAnimal = async function (req, res) {
       category,
       common_name,
       scientific_name,
-      diet
+      diet,
+      avg_lifespan_year,
+      avg_size_cm,
+      avg_weight_kg
     });
 
     return res.status(StatusCodes.OK).json(result);
@@ -111,7 +117,10 @@ animalController.editAnimalById = async function (req, res) {
       category: req.body.category,
       common_name: req.body.common_name,
       scientific_name: req.body.scientific_name,
-      diet: req.body.diet
+      diet: req.body.diet,
+      avg_lifespan_year: req.body.avg_lifespan_year,
+      avg_size_cm: req.body.avg_size_cm,
+      avg_weight_kg: req.body.avg_weight_kg
     };
 
     const result = await animalCollection.replaceOne({ _id: animalId }, animalEdits);
