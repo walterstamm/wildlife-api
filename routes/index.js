@@ -17,7 +17,7 @@ router.get('/logout', (req, res, next) => {
   // #swagger.tags = ['General']
   // #swagger.responses[200] = {description: "Success"}
   // #swagger.responses[500] = {description: "Internal Server Error"}
-  req.logout(err => {
+  req.logout((err) => {
     if (err) {
       return next(err);
     }

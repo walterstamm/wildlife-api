@@ -7,7 +7,12 @@ router.get('/', animalController.getAllAnimals);
 
 router.get('/:id', validate.idRule(), validate.checkId, animalController.getOneAnimal);
 
-router.get('/by-category/:category', validate.categoryRule(), validate.checkCategory, animalController.getAnimalsByCategory);
+router.get(
+  '/by-category/:category',
+  validate.categoryRule(),
+  validate.checkCategory,
+  animalController.getAnimalsByCategory
+);
 
 /**
  * @swagger

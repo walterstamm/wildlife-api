@@ -90,7 +90,7 @@ reportController.addReport = async function (req, res) {
     });
 
     return res.status(StatusCodes.OK).json(result);
-  } catch (error) {
+  } catch {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to add report' });
   }
 };
@@ -122,7 +122,7 @@ reportController.editReport = async function (req, res) {
       console.log('Error, report database unchanged');
     }
     return res.status(StatusCodes.OK).json(result);
-  } catch (error) {
+  } catch {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to edit report' });
   }
 };
@@ -146,7 +146,7 @@ reportController.deleteReportById = async function (req, res) {
     }
 
     return res.status(StatusCodes.OK).json(result);
-  } catch (error) {
+  } catch {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to delete report' });
   }
 };

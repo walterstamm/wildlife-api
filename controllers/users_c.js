@@ -46,16 +46,9 @@ userController.createOrUpdateUser = async function (req, res) {
   // #swagger.responses[200] = {description: "Success"}
   // #swagger.responses[201] = {description: "Created"}
   // #swagger.responses[500] = {description: "Internal Server Error"}
-  const userId = req.params?.id
-    ? ObjectId.createFromHexString(req.params.id)
-    : null
+  const userId = req.params?.id ? ObjectId.createFromHexString(req.params.id) : null;
 
-  const {
-    githubId,
-    username,
-    displayName,
-    profileUrl,
-  } = req.body;
+  const { githubId, username, displayName, profileUrl } = req.body;
 
   try {
     const database = await db.getDatabase();
@@ -65,7 +58,7 @@ userController.createOrUpdateUser = async function (req, res) {
       githubId,
       username,
       displayName,
-      profileUrl,
+      profileUrl
     };
 
     const result = await userCollection.updateOne(
@@ -88,7 +81,7 @@ userController.createOrUpdateUser = async function (req, res) {
   }
 };
 
-// - DELETE /users/:id 
+// - DELETE /users/:id
 userController.deleteUserById = async function (req, res) {
   // #swagger.tags = ['Users']
   // #swagger.responses[200] = {description: "Success"}

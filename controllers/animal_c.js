@@ -54,7 +54,11 @@ animalController.getAnimalsByCategory = async function (req, res) {
   // #swagger.responses[500] = {description: "Internal Server Error"}
   const target = req.params.category;
   try {
-    const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find({category: target});
+    const result = await db
+      .getDatabase()
+      .db('WildlifeAPI')
+      .collection('Animals')
+      .find({ category: target });
     result.toArray().then((animals) => {
       res.setHeader('Content-Type', 'application/json');
       res.status(StatusCodes.OK).json(animals);
@@ -75,12 +79,20 @@ animalController.getAnimalsByCategory = async function (req, res) {
 // diet: 'Insectivore'
 // avg_lifespan_year: 23,
 // avg_size_cm: 166,
-// avg_weight_kg: 34 
+// avg_weight_kg: 34
 animalController.addAnimal = async function (req, res) {
   // #swagger.tags = ['Animals']
   // #swagger.responses[200] = {description: "Success"}
   // #swagger.responses[500] = {description: "Internal Server Error"}
-  const { category, common_name, scientific_name, diet, avg_lifespan_year, avg_size_cm, avg_weight_kg } = req.body;
+  const {
+    category,
+    common_name,
+    scientific_name,
+    diet,
+    avg_lifespan_year,
+    avg_size_cm,
+    avg_weight_kg
+  } = req.body;
 
   try {
     const database = await db.getDatabase();
