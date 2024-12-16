@@ -29,7 +29,10 @@ validate.animalRules = () => {
         body('category').trim().escape().notEmpty().isLength({ min: 1 }).withMessage('Please provide a category.'),
         body('common_name').trim().escape().notEmpty().isLength({ min: 1 }).withMessage('Please provide the common name.'),
         body('diet').trim().escape().notEmpty().isLength({ min: 1 }).withMessage('Please include the animal\'s diet.'),
-        body('scientific_name').trim().escape().notEmpty().isLength({ min: 1 }).withMessage('Please provide the scientific name.')
+        body('scientific_name').trim().escape().notEmpty().isLength({ min: 1 }).withMessage('Please provide the scientific name.'),
+        body('avg_lifespan_year').trim().escape().notEmpty().isFloat({ min: 0.001 }).withMessage('Please provide the average life span in year.'),
+        body('avg_size_cm').trim().escape().notEmpty().isFloat({ min: 0.001 }).withMessage('Please provide the average size in cm.'),
+        body('avg_weight_kg').trim().escape().notEmpty().isFloat({ min: 0.001 }).withMessage('Please provide the average weight in kg.')
     ]
 };
 
