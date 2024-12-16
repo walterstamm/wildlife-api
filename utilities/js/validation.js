@@ -19,7 +19,7 @@ validate.checkId = (req, res, next) => {
     let errors = [];
     errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(StatusCodes.BAD_REQUEST).send("Invalid Object Id. Try again.");
+        res.status(StatusCodes.BAD_REQUEST).send("Using this endpoint requires a valid ObjectID. Please try again.");
     }
     next();
 };
@@ -30,9 +30,9 @@ validate.animalRules = () => {
         body('common_name').trim().escape().notEmpty().isLength({ min: 1 }).withMessage('Please provide the common name.'),
         body('diet').trim().escape().notEmpty().isLength({ min: 1 }).withMessage('Please include the animal\'s diet.'),
         body('scientific_name').trim().escape().notEmpty().isLength({ min: 1 }).withMessage('Please provide the scientific name.'),
-        body('avg_lifespan_year').trim().escape().notEmpty().isFloat({ min: 0.001 }).withMessage('Please provide the average life span in year.'),
-        body('avg_size_cm').trim().escape().notEmpty().isFloat({ min: 0.001 }).withMessage('Please provide the average size in cm.'),
-        body('avg_weight_kg').trim().escape().notEmpty().isFloat({ min: 0.001 }).withMessage('Please provide the average weight in kg.')
+        body('avg_lifespan_year').trim().escape().notEmpty().isFloat({ min: 0.001 }).withMessage('Please provide the average life span of the animal in years.'),
+        body('avg_size_cm').trim().escape().notEmpty().isFloat({ min: 0.001 }).withMessage('Please provide the average size of the fully grown animal in cm.'),
+        body('avg_weight_kg').trim().escape().notEmpty().isFloat({ min: 0.001 }).withMessage('Please provide the average weight of the fully grown animal in kg.')
     ]
 };
 
@@ -106,8 +106,8 @@ ${errorString}`);
 
 validate.reportRules = () => {
   return [
-    body('user_id').isMongoId().custom((value) => idInDatabase(value, 'Users')).withMessage('Please provide the id of the user making the report.'),
-    body('observation_id').isMongoId().custom((value) => idInDatabase(value, 'Observations')).withMessage('Please provide the id of the associated observation.'),
+    body('user_id').isMongoId().custom((value) => idInDatabase(value, 'Users')).withMessage('Please provide the id of the user making the report. The id must match a user in the database.'),
+    body('observation_id').isMongoId().custom((value) => idInDatabase(value, 'Observations')).withMessage('Please provide the id of the associated observation. The id must match an observation in the database.'),
     body('date').trim().escape().matches(/^20\d{2}-(0[1-9]|1[0-2])-[0-3]\d$/).withMessage('Please include the date of the report, in the form yyyy-mm-dd.'),
     body('time').trim().escape().custom(value => ['morning', 'afternoon', 'evening', 'night'].includes(value)).withMessage('Please provide the time of day of the report. Accepted values are "morning", "afternoon", "evening", and "night".'),
     body('weather').trim().escape().notEmpty().isLength({ min: 1 }).withMessage("Please provide the weather at the time of the report.")
