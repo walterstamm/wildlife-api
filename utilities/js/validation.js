@@ -22,8 +22,9 @@ validate.checkId = (req, res, next) => {
     res
       .status(StatusCodes.BAD_REQUEST)
       .send('Using this endpoint requires a valid ObjectID. Please try again.');
+  } else {
+    next();
   }
-  next();
 };
 
 validate.categoryRule = () => {
@@ -37,8 +38,9 @@ validate.checkCategory = (req, res, next) => {
     res
       .status(StatusCodes.BAD_REQUEST)
       .send('Using this endpoint requires a category. Please try again.');
+  } else {
+    next();
   }
-  next();
 };
 
 validate.animalRules = () => {
@@ -100,8 +102,9 @@ validate.checkAnimal = (req, res, next) => {
     res.status(StatusCodes.BAD_REQUEST).send(`Invalid animal:
 Errors detected:
 ${errorString}`);
+  } else {
+    next();
   }
-  next();
 };
 
 validate.userRules = () => {
@@ -142,8 +145,9 @@ validate.checkUser = (req, res, next) => {
     res.status(StatusCodes.BAD_REQUEST).send(`Invalid user:
   Errors detected:
   ${errorString}`);
+  } else {
+    next();
   }
-  next();
 };
 
 validate.observationRules = () => {
@@ -187,8 +191,9 @@ validate.checkObservation = (req, res, next) => {
     res.status(StatusCodes.BAD_REQUEST).send(`Invalid observation:
 Errors detected:
 ${errorString}`);
+  } else {
+    next();
   }
-  next();
 };
 
 validate.reportRules = () => {
@@ -238,8 +243,9 @@ validate.checkReport = (req, res, next) => {
     res.status(StatusCodes.BAD_REQUEST).send(`Invalid report:
 Errors detected:
 ${errorString}`);
+  } else {
+    next();
   }
-  next();
 };
 
 module.exports = validate;
