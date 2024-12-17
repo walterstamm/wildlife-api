@@ -11,14 +11,14 @@ animalController.getAllAnimals = async function (req, res) {
   // #swagger.responses[200] = {description: "Success"}
   // #swagger.responses[500] = {description: "Internal Server Error"}
   try {
-    const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
-    result.toArray().then((animals) => {
+      const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
+      const animals = await result.toArray(); // Asegúrate de esperar la conversión a array
       res.setHeader('Content-Type', 'application/json');
       res.status(StatusCodes.OK).json(animals);
-    });
-  } catch {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: 'There was an error retrieving animals.'
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: 'There was an error retrieving animals.',
+      error: error.message 
     });
   }
 };

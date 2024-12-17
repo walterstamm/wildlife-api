@@ -156,6 +156,14 @@ app.get('/', (req, res) => {
   `);
 });
 
+
+if (process.env.NODE_ENV === 'test') {
+  app.get('/test-error', (req, res, next) => {
+    next(new Error('Simulated Internal Error'));
+  });
+}
+
+
 // Protect all routes with rate limiter to prevent abuse
 app.use('/', limiter);
 app.use('/', routes);
@@ -171,18 +179,29 @@ process.on('unhandledRejection', (reason, promise) => {
   console.log(`\nUnhandled rejection! ${reason}\n` + `Rejection origin: ${promise}`);
 });
 
+
+let server;
+
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    message: `Something went wrong while querying ${req.originalUrl}`
+  res.status(500).json({
+    message: `Something went wrong while querying ${req.originalUrl}`,
+    error: err.message || 'Internal Server Error',
   });
 });
 
+if (process.env.NODE_ENV !== 'test') {
 mongoDb.initDb((err) => {
   if (err) {
     console.log(err);
   } else {
-    app.listen(port, () => console.log(`Running on port ${port}`));
+    server = app.listen(port, () => console.log(`Running on port ${port}`));
   }
 });
+}
+else {
+  server = app.listen(port, () => console.log(`Running on port ${port}`));
+}
+
+module.exports = { app, server };
