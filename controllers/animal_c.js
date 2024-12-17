@@ -12,7 +12,7 @@ animalController.getAllAnimals = async function (req, res) {
   // #swagger.responses[500] = {description: "Internal Server Error"}
   try {
       const result = await db.getDatabase().db('WildlifeAPI').collection('Animals').find();
-      const animals = await result.toArray(); // Asegúrate de esperar la conversión a array
+      const animals = await result.toArray(); 
       res.setHeader('Content-Type', 'application/json');
       res.status(StatusCodes.OK).json(animals);
     } catch (error) {

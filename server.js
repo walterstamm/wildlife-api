@@ -185,7 +185,7 @@ let server;
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     message: `Something went wrong while querying ${req.originalUrl}`,
     error: err.message || 'Internal Server Error',
   });
