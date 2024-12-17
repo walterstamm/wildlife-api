@@ -47,8 +47,7 @@ reportController.getReportsByUser = async function (req, res) {
   // #swagger.tags = ['Reports']
   // #swagger.responses[200] = {description: "Success"}
   // #swagger.responses[500] = {description: "Internal Server Error"}
-  const targetString = String(req.params.animal_id);
-  const target = new ObjectId(targetString);
+  const target = String(req.params.user_id);
   try {
     const result = await db
       .getDatabase()
